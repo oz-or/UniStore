@@ -12,7 +12,7 @@ const UserDropDown = () => {
   //TODO: fix the links so that they point to the right pages
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="rounded-full">
         <img className="w-6 500:w-8 ml-1" src="User.svg" alt="" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-[rgba(0,0,0,0.4)] backdrop-blur-md rounded-[4px] flex flex-col text-text">

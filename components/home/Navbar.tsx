@@ -16,10 +16,9 @@ const Navbar = () => {
   let userHasItemInCart = true;
 
   return (
-    //TODO: finish making the first part of the navbar responsive after 750 screen width
-    <>
-      <div className="1200:flex 1200:flex-col 1200:items-center">
-        <nav className="flex justify-between items-center px-2 py-1.5 750:px-10   1200:w-[1200px] justify-self-center">
+    <div className="px-2 500:px-4">
+      <div className="1200:flex 1200:flex-col 1200:items-center 1200:py-1">
+        <nav className="flex justify-between items-center py-1.5 750:px-10  1200:w-[1200px] justify-self-center">
           <div className="flex items-center gap-x-16">
             <Link href="/">
               <img
@@ -29,7 +28,7 @@ const Navbar = () => {
               />
             </Link>
             {isMoreThan1024 && (
-              <div className="flex gap-x-12">
+              <div className="flex gap-x-12 items-center text-base">
                 {/* TODO: Give these the underline conditionally (if the user is on that page or not) */}
                 <span className="border-b border-b-black">Home</span>
                 <span>Contact</span>
@@ -87,20 +86,26 @@ const Navbar = () => {
           </div>
         </nav>
       </div>
-      <div className="flex">
-        <div>
-          <Link href="#" className="flex">
-            Exclusive <img src="/ArrowRight.svg" alt="" />
-          </Link>
+
+      <hr className="border-black mx-[-8px] 500:mx-[-16px] border-opacity-15" />
+
+      {/* TODO: I decided that the woman"s fashion, men's fashion etc. link will be created in the hero section*/}
+      {!isMoreThan1024 && (
+        <div className="flex py-2 gap-x-8 500:gap-x-14 750:py-3 750:px-6 750:gap-x-16">
+          <div className="flex gap-x-1">
+            <span>Exclusive</span>
+            <img className="w-3.5" src="/ArrowRight.svg" alt="" />
+          </div>
+
+          <div className="flex gap-x-4 500:gap-x-10 750:gap-x-16">
+            <Link href="#">Home</Link>
+            <Link href="#">Contact</Link>
+            <Link href="#">About</Link>
+            <Link href="#">Sign Up</Link>
+          </div>
         </div>
-        <div className="flex">
-          <Link href="#">Home</Link>
-          <Link href="#">Contact</Link>
-          <Link href="#">About</Link>
-          <Link href="#">Sign Up</Link>
-        </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 
