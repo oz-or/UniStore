@@ -11,7 +11,7 @@ const FlashSales = () => {
       <div className="px-2 mt-2 1200:px-6 1440:px-12 1440:w-[1440px]">
         <div className="flex flex-col gap-y-2">
           <div className="flex gap-x-2 items-center px-4 pt-5 1024:pt-16 1024:px-5">
-            <span className="bg-secondary-2 w-3 h-6 block rounded"></span>
+            <span className="bg-secondary-2 w-3 h-6 block rounded" />
             <span className="text-secondary-2 font-semibold 750:text-base">
               Today&apos;s
             </span>
@@ -26,7 +26,7 @@ const FlashSales = () => {
         <FlashSaleItems />
       </div>
 
-      <hr className="border-black w-full my-16 opacity-30 max-w-[1440px]" />
+      <hr className="border-black w-full my-16 opacity-10 max-w-[1440px]" />
     </section>
   );
 };

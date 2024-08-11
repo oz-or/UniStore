@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import StarRatings from "../StarRatings";
-import { flashSales } from "@/data";
+import StarRatings from "../../StarRatings";
+import { flashSaleItems } from "@/data";
 
 const FlashSaleItems = () => {
   //TODO: When any of the cards are hovered, show the Add To Cart button programmatically and remove it from the first one (the first one should have it by default)
@@ -16,7 +16,7 @@ const FlashSaleItems = () => {
   return (
     <>
       <div className="grid grid-cols-2 750:grid-cols-3 1200:grid-cols-4 1440:grid-cols-5">
-        {flashSales.map(
+        {flashSaleItems.map(
           (
             {
               discountLabel,

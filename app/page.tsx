@@ -1,5 +1,6 @@
-import FlashSales from "@/components/home/FlashSales";
-import Hero from "@/components/home/Hero";
+import Categories from "@/components/home/Categories/Categories";
+import FlashSales from "@/components/home/FlashSale/FlashSales";
+import Hero from "@/components/home/Hero/Hero";
 import Navbar from "@/components/home/Navbar";
 import Sale from "@/components/Sale";
 
@@ -11,6 +12,7 @@ const Home = () => {
       <Navbar />
       <Hero />
       <FlashSales />
+      <Categories />
     </div>
   );
 };
