@@ -23,7 +23,7 @@ const Sale = () => {
         {moreThan750 && (
           <div className="flex items-center cursor-pointer">
             <p className="text-xs 1024:text-sm">English</p>
-            <img src="/DropDown.svg" alt="" />
+            <img src="/DropDownWhite.svg" alt="" />
           </div>
         )}
       </div>
