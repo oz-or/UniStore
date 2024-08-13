@@ -67,3 +67,46 @@ export const Categories = [
   { name: "HeadPhones", img: "/home/categories/Headphones.svg" },
   { name: "Gaming", img: "/home/categories/Gaming.svg" },
 ];
+
+export const bestSellingItems = [
+  {
+    img: "/home/bestSelling/Coat.svg",
+    name: "The north coat",
+    price: 260,
+    oldPrice: 360,
+    rating: 5,
+    numberOfRatings: 99,
+  },
+  {
+    img: "/home/bestSelling/Bag.svg",
+    name: "Gucci duffle bag",
+    price: 960,
+    oldPrice: 1160,
+    rating: 4.5,
+    numberOfRatings: 65,
+  },
+  {
+    img: "/home/bestSelling/Cooler.svg",
+    name: "RGB liquid CPU cooler",
+    price: 160,
+    oldPrice: 170,
+    rating: 4.5,
+    numberOfRatings: 74,
+  },
+  {
+    img: "/home/bestSelling/BookShelf.svg",
+    name: "Small Bookshelf",
+    price: 360,
+    oldPrice: 420,
+    rating: 5,
+    numberOfRatings: 41,
+  },
+  {
+    img: "/home/bestSelling/Coat.svg",
+    name: "The north coat",
+    price: 260,
+    oldPrice: 360,
+    rating: 5,
+    numberOfRatings: 99,
+  },
+];
