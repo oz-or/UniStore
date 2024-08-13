@@ -37,7 +37,7 @@ const FlashSaleItems = () => {
                 <img
                   className="pt-6 scale-75 h-[180px] 500:h-[250px]"
                   src={img}
-                  alt=""
+                  alt={name}
                 />
                 <div className="bg-primary-1 absolute rounded-full p-1.5 right-2 top-2 w-7 h-auto 750:w-8 ">
                   <img src="/WishlistHeart.svg" alt="" />

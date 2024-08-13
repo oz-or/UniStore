@@ -3,6 +3,7 @@ import Categories from "@/components/home/Categories/Categories";
 import FlashSales from "@/components/home/FlashSale/FlashSales";
 import Hero from "@/components/home/Hero/Hero";
 import Navbar from "@/components/home/Navbar";
+import OurProducts from "@/components/home/OurProducts/OurProducts";
 import Sale from "@/components/Sale";
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
       <FlashSales />
       <Categories />
       <BestSelling />
+      <OurProducts />
     </div>
   );
 };
