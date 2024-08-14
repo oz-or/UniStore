@@ -110,3 +110,86 @@ export const bestSellingItems = [
     numberOfRatings: 99,
   },
 ];
+
+export const ourProductsItems = [
+  {
+    img: "/home/bestSelling/Coat.svg",
+    name: "The north coat",
+    price: 260,
+
+    rating: 5,
+    numberOfRatings: 99,
+  },
+  {
+    img: "/home/bestSelling/Bag.svg",
+    name: "Gucci duffle bag",
+    price: 960,
+
+    rating: 4.5,
+    numberOfRatings: 65,
+  },
+  {
+    img: "/home/bestSelling/Cooler.svg",
+    name: "RGB liquid CPU cooler",
+    price: 160,
+
+    rating: 4.5,
+    numberOfRatings: 74,
+  },
+  {
+    img: "/home/bestSelling/BookShelf.svg",
+    name: "Small Bookshelf",
+    price: 360,
+
+    rating: 5,
+    numberOfRatings: 41,
+  },
+  {
+    img: "/home/bestSelling/Coat.svg",
+    name: "The north coat",
+    price: 260,
+
+    rating: 5,
+    numberOfRatings: 99,
+  },
+  {
+    img: "/home/bestSelling/Coat.svg",
+    name: "The north coat",
+    price: 260,
+
+    rating: 5,
+    numberOfRatings: 99,
+  },
+  {
+    img: "/home/bestSelling/Bag.svg",
+    name: "Gucci duffle bag",
+    price: 960,
+
+    rating: 4.5,
+    numberOfRatings: 65,
+  },
+  {
+    img: "/home/bestSelling/Cooler.svg",
+    name: "RGB liquid CPU cooler",
+    price: 160,
+
+    rating: 4.5,
+    numberOfRatings: 74,
+  },
+  {
+    img: "/home/bestSelling/Bag.svg",
+    name: "Gucci duffle bag",
+    price: 960,
+
+    rating: 4.5,
+    numberOfRatings: 65,
+  },
+  {
+    img: "/home/bestSelling/Cooler.svg",
+    name: "RGB liquid CPU cooler",
+    price: 160,
+
+    rating: 4.5,
+    numberOfRatings: 74,
+  },
+];
