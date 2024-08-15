@@ -63,7 +63,7 @@ const OurProductsItems = () => {
       {/* 
         TODO: Render 1 row of products here from the DB. The rest should appear when the user clicks on the view all products button
         */}
-      <div className="flex justify-center mt-2 1024:mt-5">
+      <div className="flex justify-center mt-4 750:mt-6 1024:mt-8">
         <button
           onClick={handleShowitems}
           className="bg-secondary-2 text-text py-2 px-8 text-xs w-[170px] font-medium 500:py-3 750:text-sm 500:w-[200px] rounded"
