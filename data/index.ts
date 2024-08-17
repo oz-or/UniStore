@@ -11,6 +11,8 @@ export const heroNavLinks = [
   { href: "#", text: "Health & Beauty" },
 ];
 
+//I don't know where should the data of the ratings and numberOfRatings go and come from
+
 export const flashSaleItems = [
   {
     discountLabel: "-40%",

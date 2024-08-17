@@ -1,19 +1,13 @@
-import Header from "@/components/Header";
 import Perk from "./Perk";
 
 const NewArrival = () => {
   return (
     <section
       id="newArrival"
-      className="1440:flex 1440:flex-col 1440:items-center "
+      className="1200:flex 1200:flex-col 1200:items-center py-5"
     >
-      <div className="px-2 mt-2 1200:px-6 1440:px-12 1440:w-[1440px]">
-        <Header text="Featured" title="New Arrival" />
-        <div></div>
-      </div>
-
-      <div className="1024:flex 1024:justify-center">
-        <div className="grid 750:grid-cols-2 1024:grid-cols-3 justify-center my-10 gap-y-24 1024:w-[1200px]">
+      <div className="1024:flex 1024:justify-center 1024:py-12">
+        <div className="grid 750:grid-cols-2 1024:grid-cols-3 justify-center mb-10 mt-20 gap-y-24 1024:w-[1200px]">
           <Perk
             iconLink="/DeliveryIcon.svg"
             title="Free and fast delivery"
