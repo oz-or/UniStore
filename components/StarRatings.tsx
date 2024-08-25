@@ -7,7 +7,7 @@ function StarRatings({ starRating }: { starRating: number }) {
   const [rating, setRating] = useState(0);
   return (
     <>
-      <div className="scale-75 500:scale-[80%]">
+      <div className="scale-75 500:scale-[80%] ">
         <Star rating={starRating} setRating={setRating} />
       </div>
     </>

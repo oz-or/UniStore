@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ const Footer = () => {
       <div className="py-12 px-6 pb-20 max-w-[1440px] 1440:py-24">
         <div className="grid grid-cols-1 500:grid-cols-2 1024:grid-cols-4 1200:grid-cols-5 justify-center gap-y-12 1024:gap-x-12 ">
           <div className="flex flex-col items-center 1024:items-start gap-y-3 ">
-            <Link href="#">
+            <Link href="/">
               <h2 className="font-bold text-3xl">UniStore</h2>
             </Link>
             <h3 className="font-medium text-2xl py-2">Subscribe</h3>
@@ -93,7 +93,7 @@ const Footer = () => {
               <Link href="#">
                 <li>FAQ</li>
               </Link>
-              <Link href="#">
+              <Link href="/contact">
                 <li>Contact</li>
               </Link>
             </ul>

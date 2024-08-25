@@ -5,14 +5,16 @@ const HeroNavLink = ({
   className,
   text,
   children,
+  handleClick,
 }: {
   href: string;
   className?: string;
   text: string;
   children?: React.ReactNode;
+  handleClick?: () => void;
 }) => {
   return (
-    <Link href={href} className={className}>
+    <Link href={href} className={className} onClick={handleClick}>
       <span>{text}</span>
       {children}
     </Link>

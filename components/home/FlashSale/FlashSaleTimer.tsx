@@ -23,7 +23,7 @@ const FlashSaleTimer = () => {
         </span>
       </div>
       <div className="flex items-center gap-x-2 1024:gap-x-4">
-        <div className="flex flex-col">
+        <div className="flex flex-col text-center">
           <span className="text-[8px] 500:text-[10px]">Minutes</span>
           <span className="font-semibold text-xl 500:text-2xl">19</span>
         </div>
@@ -33,7 +33,7 @@ const FlashSaleTimer = () => {
         </span>
       </div>
       <div className="flex items-center gap-x-2 1024:gap-x-4">
-        <div className="flex flex-col">
+        <div className="flex flex-col text-center">
           <span className="text-[8px] 500:text-[10px]">Seconds</span>
           <span className="font-semibold text-xl 500:text-2xl">56</span>
         </div>

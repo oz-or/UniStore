@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import OurProductsItems from "./OurProductsItems";
 
-//TODO: Implement the OurProducts component (copy the best selling products component and modify it)
 const OurProducts = () => {
   return (
     <section

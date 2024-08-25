@@ -3,7 +3,6 @@ import FlashSaleItems from "./FlashSaleItems";
 import FlashSaleTimer from "./FlashSaleTimer";
 
 const FlashSales = () => {
-  /* TODO: programmatically display the items that are on sale from the DB*/
   return (
     <section
       id="flashSales"

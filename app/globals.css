@@ -2,7 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background-color: rgba(130, 130, 130, 0.03);
   font-size: 14px;
+}
+
+/* Animations */
+/* Sliding in from bottom */
+@keyframes smooth-appear {
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+.animation-smooth-appear {
+  animation: smooth-appear 0.5s ease forwards;
 }

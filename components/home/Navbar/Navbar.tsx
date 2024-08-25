@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import UserDropDown from "../UserDropDown";
+
+import UserDropDown from "@/components/home/Navbar/UserDropDown";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import MobileMenu from "../Hero/MobileMenu";
 
 const Navbar = () => {
-  //Instead of Exclusive(which is on the design), I'll use the store's name at the end of the mobile navbar
-
   const [inputValue, setInputValue] = useState("");
 
   const isMoreThan1024 = useMediaQuery("(min-width: 1024px)");
@@ -17,9 +17,9 @@ const Navbar = () => {
   let userHasItemInCart = true;
 
   return (
-    <div className="px-2 500:px-4">
-      <div className="1200:flex 1200:flex-col 1200:items-center 1200:py-1 ">
-        <nav className="flex justify-between items-center py-1.5 750:px-10 1200:w-[1200px] 1024:px-4 justify-self-center 1440:w-[1440px]">
+    <div className="">
+      <div className="1200:flex 1200:flex-col 1200:items-center 1200:py-1 px-2 500:px-4">
+        <nav className="flex justify-between items-center py-1.5 750:px-10 1200:w-[1200px] 1024:px-4 justify-self-center 1440:w-[1440px] 1200:pl-12">
           <div className="flex items-center gap-x-16 1440:gap-x-24">
             <Link href="/">
               <img
@@ -31,16 +31,17 @@ const Navbar = () => {
             {isMoreThan1024 && (
               <div className="flex gap-x-12 items-center text-base 1440:gap-x-16 1440:text-lg">
                 {/* TODO: Give these the underline conditionally (if the user is on that page or not) */}
+
                 <span className="border-b border-b-black">Home</span>
-                <span>Contact</span>
-                <span>About</span>
-                <span>Sign Up</span>
+                <Link href="/contact">Contact</Link>
+                <Link href="/about">About</Link>
+                <Link href="#">Sign Up</Link>
               </div>
             )}
           </div>
 
           <div className="flex">
-            <div className="relative  mr-3 500:mr-4">
+            <div className="relative mr-3 500:mr-4">
               <input
                 className="pl-4 pr-10 py-[7px] relative text-[10px] placeholder:opacity-85 bg-secondary text-black rounded-[4px] border-none outline-neutral-100 h-full 500:pl-6 500:pr-16 1440:w-[350px] 1440:text-[16px] 1440:py-3  1440:placeholder:opacity-60"
                 type="text"
@@ -91,21 +92,7 @@ const Navbar = () => {
 
       <hr className="border-black mx-[-8px] 500:mx-[-16px] border-opacity-15" />
 
-      {!isMoreThan1024 && (
-        <div className="flex py-2 gap-x-8 500:gap-x-14 750:py-3 750:px-6 750:gap-x-16">
-          <div className="flex gap-x-1">
-            <span>Exclusive</span>
-            <img className="w-3.5" src="/ArrowRight.svg" alt="" />
-          </div>
-
-          <div className="flex gap-x-4 500:gap-x-10 750:gap-x-16">
-            <Link href="#">Home</Link>
-            <Link href="#">Contact</Link>
-            <Link href="#">About</Link>
-            <Link href="#">Sign Up</Link>
-          </div>
-        </div>
-      )}
+      <MobileMenu isMoreThan1024={isMoreThan1024} />
     </div>
   );
 };

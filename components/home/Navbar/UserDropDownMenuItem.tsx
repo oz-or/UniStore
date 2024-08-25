@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DropdownMenuItem } from "./ui/DropdownMenu";
+import { DropdownMenuItem } from "../../ui/DropdownMenu";
 
 const UserDropDownMenuItem = ({
   href,
