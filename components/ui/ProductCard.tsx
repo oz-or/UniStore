@@ -64,7 +64,7 @@ const ProductCard = ({
 
         {i === hovered && (
           <button
-            className="absolute bg-black text-primary-1 w-full rounded p-2.5 bottom-[-10px] opacity-0 animation-smooth-appear"
+            className="absolute bg-black text-primary-1 w-full rounded p-2.5 bottom-[-10px] opacity-0 animation-appear-bottom"
             onClick={() => handleAddToCart()}
           >
             Add To Cart

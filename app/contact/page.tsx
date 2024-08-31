@@ -1,4 +1,5 @@
 import ContactForm from "@/components/contact/ContactForm";
+import NavigationHeading from "@/components/NavigationHeading";
 const page = () => {
   return (
     <section
@@ -6,11 +7,7 @@ const page = () => {
       className="flex flex-col 1440:items-center px-2 1200:px-6 1440:pb-24"
     >
       <div className="pb-16 1024:pb-24">
-        {/*TODO: Instead of this div, create a reusable NavigationHeading component */}
-        <div className="pb-14 pt-7 pl-4 500:text-base 1024:py-16 1024:pl-8 1440:pl-0 1440:translate-x-[-18px] 1440:py-20">
-          <span className="opacity-50">Home / </span>{" "}
-          <span className="">Contact</span>
-        </div>
+        <NavigationHeading pageName="Contact" />
 
         <div className="flex flex-col 500:items-center  ">
           <div className="flex flex-col gap-y-12 500:max-w-[475px] 750:max-w-full 1024:flex-row 1024:gap-x-24">

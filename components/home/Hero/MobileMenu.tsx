@@ -2,12 +2,15 @@
 
 import { heroNavLinks } from "@/data";
 import HeroNavLink from "./HeroNavLink";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { RemoveScroll } from "react-remove-scroll";
 
 const MobileMenu = ({ isMoreThan1024 }: { isMoreThan1024: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [isHovered, setIsHovered] = useState(0);
 
   return (
     !isMoreThan1024 && (
@@ -17,15 +20,11 @@ const MobileMenu = ({ isMoreThan1024 }: { isMoreThan1024: boolean }) => {
             <button
               className="flex gap-x-1 items-center"
               onClick={() => {
-                setIsOpen(true);
+                setIsOpen(!isOpen);
               }}
             >
               <span>Categories</span>
-              <img
-                className={`w-3.5 ${isOpen && "rotate-[180deg]"} transition `}
-                src="/ArrowRight.svg"
-                alt=""
-              />
+              <img className="w-3.5 " src="/ArrowRight.svg" alt="" />
             </button>
 
             <div className="flex gap-x-4 500:gap-x-10 750:gap-x-16">
@@ -45,16 +44,23 @@ const MobileMenu = ({ isMoreThan1024 }: { isMoreThan1024: boolean }) => {
           </div>
         </div>
 
-        {/* TODO: Disable scrolling while the mobile menu is open */}
-        {/* TODO: The mobile navbaar should slide in from the left */}
-        {isOpen && (
-          <div className="absolute z-40 bg-primary-1 top-[-94px] 500:top-[-90px] 750:top-[-112px] w-screen flex justify-between py-3 px-5 items-start h-screen 500:py-4 500:px-7 750:px-9 750:py-6 ">
-            <div>
+        {/*  The RemoveScroll from the react-remove-scroll package removes the option to scroll while the mobile menu is open */}
+
+        <RemoveScroll enabled={isOpen}>
+          <div
+            className={`absolute z-40 bg-primary-1 top-[-94px] 500:top-[-90px] 750:top-[-112px] w-screen flex justify-between py-3 px-5 items-start h-screen 500:py-4 500:px-7 750:px-9 750:py-6 pt-4 ease-in-out duration-300 right-0 ${
+              isOpen ? "translate-x-0 " : "translate-x-[-100%]"
+            } `}
+          >
+            {/* TODO: Style the Mobile Menu somehow (I think that I should do it exactly like in the Crypto project) */}
+            <div className="flex flex-col gap-y-4 ">
               {heroNavLinks.map(({ href, text }, i) => (
                 <HeroNavLink
                   key={i}
                   href={href}
-                  className="flex justify-between items-center py-1.5 gap-x-4 font-medium 500:text-base 750:text-lg"
+                  className={
+                    "flex justify-between items-center gap-x-4 font-medium text-lg "
+                  }
                   text={text}
                   handleClick={() => setIsOpen(false)}
                 >
@@ -69,7 +75,11 @@ const MobileMenu = ({ isMoreThan1024 }: { isMoreThan1024: boolean }) => {
                 </HeroNavLink>
               ))}
             </div>
-            <button onClick={() => setIsOpen(false)}>
+            <button
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
               <Image
                 className="m-1"
                 src="/x.png"
@@ -79,7 +89,7 @@ const MobileMenu = ({ isMoreThan1024 }: { isMoreThan1024: boolean }) => {
               />
             </button>
           </div>
-        )}
+        </RemoveScroll>
       </div>
     )
   );

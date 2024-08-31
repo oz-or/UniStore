@@ -20,3 +20,12 @@ declare type ProductCardType = {
   numberOfRatings: number;
   discount?: number;
 };
+
+declare type MembersType = {
+  name: string;
+  position: string;
+  img: string;
+  twitter: string;
+  instagram: string;
+  linkedIn: string;
+};

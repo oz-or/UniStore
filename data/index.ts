@@ -19,3 +19,53 @@ export const Categories = [
   { name: "HeadPhones", img: "/home/categories/Headphones.svg" },
   { name: "Gaming", img: "/home/categories/Gaming.svg" },
 ];
+
+export const achievements = [
+  {
+    icon: "about/Sellers.svg",
+    stat: "10.5k",
+    desc: "Sellers active on our site",
+  },
+  {
+    icon: "about/Sales.svg",
+    stat: "33k",
+    desc: "Monthly sold items",
+  },
+  {
+    icon: "about/ActiveCustomer.svg",
+    stat: "45.5k",
+    desc: "Customer active on our site",
+  },
+  {
+    icon: "about/Money.svg",
+    stat: "25k",
+    desc: "Annual gross sale on our site",
+  },
+];
+
+export const members = [
+  {
+    name: "Thomas Schwarz",
+    position: "Founder & Chairman",
+    img: "about/ThomasSchwarz.png",
+    twitter: "ThomasSchwarz",
+    instagram: "ThomasSchwarz",
+    linkedIn: "ThomasSchwarz",
+  },
+  {
+    name: "Emily Jurker",
+    position: "Managing Director",
+    img: "about/EmilyJurker.png",
+    twitter: "EmilyJurker",
+    instagram: "EmilyJurker",
+    linkedIn: "EmilyJurker",
+  },
+  {
+    name: "William Smith",
+    position: "Product Designer",
+    img: "about/WilliamSmith.png",
+    twitter: "WilliamSmith",
+    instagram: "WilliamSmith",
+    linkedIn: "WilliamSmith",
+  },
+];

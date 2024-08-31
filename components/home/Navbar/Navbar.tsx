@@ -6,11 +6,35 @@ import { useState } from "react";
 import UserDropDown from "@/components/home/Navbar/UserDropDown";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileMenu from "../Hero/MobileMenu";
+import { usePathname } from "next/navigation";
+
+const Navlinks = [
+  {
+    name: "Home",
+    link: "/",
+  },
+  {
+    name: "About",
+    link: "/about",
+  },
+  {
+    name: "Contact",
+    link: "/contact",
+  },
+  {
+    name: "Sign Up",
+    link: "/sign-up",
+  },
+];
 
 const Navbar = () => {
   const [inputValue, setInputValue] = useState("");
 
   const isMoreThan1024 = useMediaQuery("(min-width: 1024px)");
+
+  const pathname = usePathname();
+
+  const [isHovered, setIsHovered] = useState(pathname);
 
   //These will have to be states
   let userLoggedIn = true;
@@ -30,12 +54,19 @@ const Navbar = () => {
             </Link>
             {isMoreThan1024 && (
               <div className="flex gap-x-12 items-center text-base 1440:gap-x-16 1440:text-lg">
-                {/* TODO: Give these the underline conditionally (if the user is on that page or not) */}
-
-                <span className="border-b border-b-black">Home</span>
-                <Link href="/contact">Contact</Link>
-                <Link href="/about">About</Link>
-                <Link href="#">Sign Up</Link>
+                {Navlinks.map((NavLink, i) => (
+                  <Link
+                    key={i}
+                    href={NavLink.link}
+                    className={`${
+                      pathname === NavLink.link && "border-b border-b-black"
+                    } ${isHovered === i && "border-b border-b-black"}`}
+                    onMouseEnter={() => setIsHovered(i)}
+                    onMouseLeave={() => setIsHovered(-1)}
+                  >
+                    {NavLink.name}
+                  </Link>
+                ))}
               </div>
             )}
           </div>

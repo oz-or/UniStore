@@ -13,12 +13,103 @@ body {
 
 /* Animations */
 /* Sliding in from bottom */
-@keyframes smooth-appear {
+@keyframes appear-bottom {
   to {
     bottom: 0;
     opacity: 1;
   }
 }
-.animation-smooth-appear {
-  animation: smooth-appear 0.5s ease forwards;
+.animation-appear-bottom {
+  animation: appear-bottom 0.5s ease forwards;
+}
+
+/* For the Carousel on the About page */
+.embla {
+  overflow: hidden;
+  position: relative;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.embla__button {
+  outline: 0;
+  cursor: pointer;
+  background-color: transparent;
+  touch-action: manipulation;
+  position: absolute;
+  z-index: 1;
+
+  transform: translateY(-50%);
+  border: 0;
+  width: 30px;
+  height: 30px;
+  top: 45%;
+  justify-content: center;
+  align-items: center;
+  fill: black;
+  padding: 0;
+}
+
+.embla__button__svg {
+  width: 100%;
+  height: 100%;
+}
+
+.embla__button--prev {
+  left: 22px;
+}
+
+.embla__button--next {
+  right: 22px;
+}
+
+/* Styles for Embla carousel dot navigation  */
+
+.embla__controls {
+  display: grid;
+  justify-content: center;
+  margin-top: 1.8rem;
+}
+@media only screen and (max-width: 1199px) {
+  .embla__controls {
+    display: none;
+  }
+}
+
+.embla__dots {
+  display: flex;
+}
+.embla__dot {
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.embla__dot:after {
+  box-shadow: inset 0 0 0 10rem rgba(25, 25, 25, 0.3);
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+
+  content: "";
+}
+.embla__dot--selected:after {
+  box-shadow: inset 0 0 0 10rem #db4444;
+  border: solid 2px rgba(25, 25, 25, 0.3);
 }
