@@ -11,6 +11,45 @@ export const heroNavLinks = [
   { href: "#", text: "Health & Beauty" },
 ];
 
+//change the textFirst and textSecond to be appropriate to the images (with chatGpt)
+export const heroCarouselItems = [
+  {
+    id: 1,
+    img: "/home/hero/carousel-1.png",
+    textFirst: "Up to 10%",
+    textSecond: "off Voucher",
+    link: "#",
+  },
+  {
+    id: 2,
+    img: "/home/hero/carousel-2.png",
+    textFirst: "Up to 10%",
+    textSecond: "off Voucher",
+    link: "#",
+  },
+  {
+    id: 3,
+    img: "/home/hero/carousel-3.png",
+    textFirst: "Up to 10%",
+    textSecond: "off Voucher",
+    link: "#",
+  },
+  {
+    id: 4,
+    img: "/home/hero/carousel-4.png",
+    textFirst: "Up to 10%",
+    textSecond: "off Voucher",
+    link: "#",
+  },
+  {
+    id: 5,
+    img: "/home/hero/carousel-5.png",
+    textFirst: "Up to 10%",
+    textSecond: "off Voucher",
+    link: "#",
+  },
+];
+
 export const Categories = [
   { name: "Phones", img: "/home/categories/Phone.svg" },
   { name: "Computers", img: "/home/categories/Computer.svg" },

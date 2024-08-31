@@ -73,16 +73,11 @@ body {
 .embla__controls {
   display: grid;
   justify-content: center;
-  margin-top: 1.8rem;
-}
-@media only screen and (max-width: 1199px) {
-  .embla__controls {
-    display: none;
-  }
 }
 
 .embla__dots {
   display: flex;
+  column-gap: 12px;
 }
 .embla__dot {
   -webkit-appearance: none;
@@ -94,22 +89,61 @@ body {
   border: 0;
   padding: 0;
   margin: 0;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  background-color: rgba(177, 177, 177, 0.552);
 }
 .embla__dot:after {
-  box-shadow: inset 0 0 0 10rem rgba(25, 25, 25, 0.3);
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
 
   content: "";
 }
-.embla__dot--selected:after {
-  box-shadow: inset 0 0 0 10rem #db4444;
-  border: solid 2px rgba(25, 25, 25, 0.3);
+.embla__dot--selected {
+  box-shadow: inset 0 0 0 1px rgb(177, 177, 177);
+  background-color: #db4444;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* for HeroCarousel */
+.embla__dots2 {
+  display: flex;
+  column-gap: 12px;
+}
+.embla__dot2 {
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(177, 177, 177, 0.552);
+}
+.embla__dot2:after {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+
+  content: "";
+}
+.embla__dot2--selected {
+  box-shadow: inset 0 0 0 1px rgb(177, 177, 177);
+  background-color: #db4444;
+  width: 0.6rem;
+  height: 0.6rem;
 }

@@ -24,7 +24,7 @@ const MobileMenu = ({ isMoreThan1024 }: { isMoreThan1024: boolean }) => {
               }}
             >
               <span>Categories</span>
-              <img className="w-3.5 " src="/ArrowRight.svg" alt="" />
+              <img className="w-3.5 " src="/ArrowRightBlack.svg" alt="" />
             </button>
 
             <div className="flex gap-x-4 500:gap-x-10 750:gap-x-16">

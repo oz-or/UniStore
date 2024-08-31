@@ -33,7 +33,6 @@ const MembersCarousel = () => {
   //for the carousel
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
-      loop: true,
       align: "center",
       duration: isMoreThan1200 ? 100 : 60,
       slidesToScroll: numSlidesToScroll,
@@ -101,7 +100,7 @@ const MembersCarousel = () => {
         <PrevButton onClick={scrollPrev}></PrevButton>
         <NextButton onClick={scrollNext}></NextButton>
 
-        <div className="embla__controls ">
+        <div className=" hidden 1200:grid 1200:justify-center 1200:mt-[1.8rem]">
           <div className="embla__dots">
             {scrollSnaps.map((_, index) => (
               <DotButton

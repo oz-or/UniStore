@@ -1,3 +1,11 @@
+declare type HeroCarouselType = {
+  id: number;
+  img: string;
+  textFirst: string;
+  textSecond: string;
+  link: string;
+};
+
 declare type ProductsType = {
   discount?: number;
   img: string;
