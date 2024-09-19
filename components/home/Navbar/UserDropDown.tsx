@@ -12,27 +12,27 @@ const UserDropDown = () => {
   //TODO: fix the links so that they point to the right pages
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="rounded-full">
-        <img className="w-6 500:w-8 ml-1 1024:w-9" src="User.svg" alt="" />
+      <DropdownMenuTrigger className="rounded-full ml-1">
+        <img className="w-6 500:w-8  1024:w-9" src="/User.svg" alt="" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-[rgba(0,0,0,0.4)] backdrop-blur-md rounded-[4px] flex flex-col text-text">
         <UserDropDownMenuItem
           href="#"
-          iconSrc="UserIcon.svg"
+          iconSrc="/UserIcon.svg"
           text="Manage My Account"
         />
-        <UserDropDownMenuItem href="#" iconSrc="Order.svg" text="My Order" />
+        <UserDropDownMenuItem href="#" iconSrc="/Order.svg" text="My Order" />
         <UserDropDownMenuItem
           href="#"
-          iconSrc="Cancel.svg"
+          iconSrc="/Cancel.svg"
           text="My Cancellations"
         />
         <UserDropDownMenuItem
           href="#"
-          iconSrc="Reviews.svg"
+          iconSrc="/Reviews.svg"
           text="My Reviews"
         />
-        <UserDropDownMenuItem href="#" iconSrc="Logout.svg" text="Logout" />
+        <UserDropDownMenuItem href="#" iconSrc="/Logout.svg" text="Logout" />
       </DropdownMenuContent>
     </DropdownMenu>
   );

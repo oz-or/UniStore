@@ -5,7 +5,7 @@ const Header = ({
   className,
 }: {
   text: string;
-  title: string;
+  title?: string;
   className?: string;
   children?: React.ReactNode;
 }) => {

@@ -1,6 +1,5 @@
 import AboutHero from "@/components/about/AboutHero";
 import Achievements from "@/components/about/Achievements";
-import MemberCard from "@/components/about/MemberCard";
 import MembersCarousel from "@/components/about/MembersCarousel";
 import NavigationHeading from "@/components/NavigationHeading";
 import Perks from "@/components/Perks";
@@ -20,7 +19,6 @@ const page = () => {
 
         <Achievements />
 
-        {/* TODO: The MembersCarousel should be here but for styling reasons it is not yet */}
         <MembersCarousel />
 
         <div>

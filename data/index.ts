@@ -108,3 +108,5 @@ export const members = [
     linkedIn: "WilliamSmith",
   },
 ];
+
+export const sizes = ["XS", "S", "M", "L", "XL"];

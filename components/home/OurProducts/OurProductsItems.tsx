@@ -54,7 +54,7 @@ const OurProductsItems = () => {
       <div className="flex justify-center mt-4 750:mt-6 1024:mt-8">
         <button
           onClick={handleShowitems}
-          className="bg-secondary-2 text-text py-2 px-8 text-xs w-[170px] font-medium 500:py-3 750:text-sm 500:w-[200px] rounded"
+          className="bg-secondary-2 text-text py-3 px-10 text-sm  font-medium 500:py-3 750:text-sm 500:w-[220px] rounded"
         >
           {!showAllItems ? "View All Products" : "Show Less"}
         </button>

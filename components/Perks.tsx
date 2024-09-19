@@ -5,7 +5,7 @@ const Perks = () => {
     <div className="1024:flex 1024:justify-center 1024:py-12">
       <div className="grid 750:grid-cols-2 1024:grid-cols-3 justify-center mb-10 mt-20 gap-y-24 1024:w-[1200px]">
         <Perk
-          iconLink="/DeliveryIcon.svg"
+          iconLink="/DeliveryIconWhite.svg"
           title="Free and fast delivery"
           desc="Free delivery for all orders over $140"
         />

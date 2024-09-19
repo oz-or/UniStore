@@ -28,11 +28,11 @@ export async function getProductsByCategory(category) {
 }
 
 // The getProductById function retrieves a product from the products table in the database that matches the id passed as an argument.
-export async function getProductById(id) {
+export async function getProductByName(name) {
   let { data, error } = await supabase
-    .from("products")
+    .from("products_details")
     .select("*")
-    .eq("id", id);
+    .eq("name", name);
 
   if (error) {
     console.error(error);

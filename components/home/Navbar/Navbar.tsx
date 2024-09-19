@@ -36,12 +36,14 @@ const Navbar = () => {
 
   const [isHovered, setIsHovered] = useState(pathname);
 
+  const [isWishlistHeartHovered, setIsWishlistHeartHovered] = useState(false);
+
   //These will have to be states
   let userLoggedIn = true;
   let userHasItemInCart = true;
 
   return (
-    <div className="">
+    <div>
       <div className="1200:flex 1200:flex-col 1200:items-center 1200:py-1 px-2 500:px-4">
         <nav className="flex justify-between items-center py-1.5 750:px-10 1200:w-[1200px] 1024:px-4 justify-self-center 1440:w-[1440px] 1200:pl-12">
           <div className="flex items-center gap-x-16 1440:gap-x-24">
@@ -60,9 +62,11 @@ const Navbar = () => {
                     href={NavLink.link}
                     className={`${
                       pathname === NavLink.link && "border-b border-b-black"
-                    } ${isHovered === i && "border-b border-b-black"}`}
-                    onMouseEnter={() => setIsHovered(i)}
-                    onMouseLeave={() => setIsHovered(-1)}
+                    } ${
+                      isHovered === NavLink.link && "border-b border-b-black"
+                    }`}
+                    onMouseEnter={() => setIsHovered(NavLink.link)}
+                    onMouseLeave={() => setIsHovered(NavLink.link)}
                   >
                     {NavLink.name}
                   </Link>
@@ -88,16 +92,29 @@ const Navbar = () => {
               />
             </div>
             <div className="flex items-center gap-x-1.5 500:gap-x-2 1024:gap-x-3">
-              <img
-                className="w-4 h-4 500:w-5 500:h-5"
-                src="WishListHeart.svg"
-                alt=""
-              />
+              <button
+                onMouseEnter={() =>
+                  setIsWishlistHeartHovered(!isWishlistHeartHovered)
+                }
+                onMouseLeave={() =>
+                  setIsWishlistHeartHovered(!isWishlistHeartHovered)
+                }
+              >
+                <img
+                  className="w-4 h-4 500:w-5 500:h-5 cursor"
+                  src={
+                    !isWishlistHeartHovered
+                      ? "/WishlistHeart.svg"
+                      : "/WishlistHeartFilled.svg"
+                  }
+                  alt=""
+                />
+              </button>
               {userHasItemInCart ? (
                 <div className="relative">
                   <img
                     className="w-4 h-4 500:w-5 500:h-5 1024:w-6 1024:h-6"
-                    src="Cart.svg"
+                    src="/Cart.svg"
                     alt=""
                   />
                   <span className="absolute -top-1 -right-1 w-3 h-3 bg-secondary-2 text-[9px] text-primary-1 rounded-full flex items-center justify-center">
@@ -110,7 +127,7 @@ const Navbar = () => {
               ) : (
                 <img
                   className="w-5 h-5 750:w-6 750:h-6"
-                  src="Cart.svg"
+                  src="/Cart.svg"
                   alt=""
                 />
               )}

@@ -14,6 +14,8 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 const MembersCarousel = () => {
   const [members, setMembers] = useState<MembersType[]>([]);
 
+  const [clickedBtn, setClickedBtn] = useState("");
+
   const isMoreThan750 = useMediaQuery("(min-width: 750px)");
   const isMoreThan1200 = useMediaQuery("(min-width: 1200px)");
   const isMoreThan1440 = useMediaQuery("(min-width: 1440px)");
@@ -59,14 +61,18 @@ const MembersCarousel = () => {
     onNavButtonClick
   );
 
+  //Carousel previous and next buttons
   const scrollPrev = useCallback(() => {
+    setClickedBtn("Prev");
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
 
   const scrollNext = useCallback(() => {
+    setClickedBtn("Next");
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
+  //Getting the data for the carousel (the members from the DB) and reinitializing the carousel after it's done (the carousel would break without the reinitialization)
   useEffect(() => {
     getMembers().then((data) => {
       data !== null && setMembers(data);
@@ -97,8 +103,8 @@ const MembersCarousel = () => {
           )}
         </div>
 
-        <PrevButton onClick={scrollPrev}></PrevButton>
-        <NextButton onClick={scrollNext}></NextButton>
+        <PrevButton onClick={scrollPrev} clickedBtn={clickedBtn}></PrevButton>
+        <NextButton onClick={scrollNext} clickedBtn={clickedBtn}></NextButton>
 
         <div className=" hidden 1200:grid 1200:justify-center 1200:mt-[1.8rem]">
           <div className="embla__dots">

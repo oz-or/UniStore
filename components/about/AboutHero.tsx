@@ -5,11 +5,11 @@ const AboutHero = () => {
         <h1 className="text-[40px] font-semibold mb-6">Our Story</h1>
         <div className="text-sm flex flex-col gap-y-5 w-full 500:gap-y-10 max-w-[800px] 750:max-w-[600px] 750:gap-y-6 750:text-xs 1024:text-base ">
           <p>
-            Launced in 2015, UniStore is the premier online shopping makterplace
-            in Western Europe with an active presense in the United Kingdom.
-            Supported by wide range of tailored marketing, data and service
-            solutions, UniStore has 10,500 sallers, 300 brands and serves 3
-            millions customers across the region.
+            Launched in 2015, UniStore is the premier online shopping
+            makterplace in Western Europe with an active presense in the United
+            Kingdom. Supported by wide range of tailored marketing, data and
+            service solutions, UniStore has 10,500 sallers, 300 brands and
+            serves 3 millions customers across the region.
           </p>
           {/* hidden above 750px */}
           <div className="750:hidden">

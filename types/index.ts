@@ -16,6 +16,17 @@ declare type ProductsType = {
   num_ratings: number;
 };
 
+declare type ProductDetailsInfoType = {
+  name: string;
+  price: number;
+  oldPrice?: number;
+  starRating: number;
+  numRatings: number;
+  hasSizes: boolean;
+  inStock: boolean;
+  desc: string;
+};
+
 declare type ProductCardType = {
   i: number;
   img: string;
