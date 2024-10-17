@@ -3,7 +3,7 @@ import OurProductsItems from "@/components/home/OurProducts/OurProductsItems";
 import NavigationHeading from "@/components/NavigationHeading";
 import ProductImages from "@/components/productDetails/ProductImages";
 import ProductInfo from "@/components/productDetails/ProductInfo";
-import { getProductByName, getProducts } from "@/services/apiProducts";
+import { getProductByName, getProducts } from "@/utils/apiProducts";
 
 export async function generateStaticParams() {
   const products = await getProducts();

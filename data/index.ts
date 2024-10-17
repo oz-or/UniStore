@@ -82,31 +82,78 @@ export const achievements = [
   },
 ];
 
-export const members = [
+export const sizes = ["XS", "S", "M", "L", "XL"];
+
+export const accountAccordionItems = [
   {
-    name: "Thomas Schwarz",
-    position: "Founder & Chairman",
-    img: "about/ThomasSchwarz.png",
-    twitter: "ThomasSchwarz",
-    instagram: "ThomasSchwarz",
-    linkedIn: "ThomasSchwarz",
+    text: "Profile",
+    alt: "Profile icon",
+    icon: "/account/personal-information.png",
   },
   {
-    name: "Emily Jurker",
-    position: "Managing Director",
-    img: "about/EmilyJurker.png",
-    twitter: "EmilyJurker",
-    instagram: "EmilyJurker",
-    linkedIn: "EmilyJurker",
+    text: "Address Book",
+    alt: "Address Book icon",
+    icon: "/account/address-book.png",
+    items: [{ text: "Manage Addresses", link: "/account/addresses" }],
   },
   {
-    name: "William Smith",
-    position: "Product Designer",
-    img: "about/WilliamSmith.png",
-    twitter: "WilliamSmith",
-    instagram: "WilliamSmith",
-    linkedIn: "WilliamSmith",
+    text: "Order History",
+    alt: "Order History icon",
+    icon: "/account/order-history.png",
+    items: [
+      { text: "View Orders", link: "/account/orders" },
+      { text: "Return Request", link: "/account/return-requests" },
+      { text: "Cancellation Requests", link: "/account/cancellation-requests" },
+    ],
+  },
+
+  {
+    text: "Payment Methods",
+    alt: "Payment Methods icon",
+    icon: "/account/payment-methods.png",
+    items: [
+      { text: "Saved Payment Methods", link: "/account/payment-methods" },
+      { text: "Add New Payment Method", link: "/account/add-payment-method" },
+    ],
+  },
+  {
+    text: "Wishlist",
+    alt: "Wishlist icon",
+    icon: "/WishlistHeartFilled.svg",
+    items: [{ text: "View Wishlist", link: "/account/wishlist" }],
+  },
+  {
+    text: "Subscriptions & Notifications",
+    alt: "Subscriptions & Notifications icon",
+    icon: "/account/notifications.png",
+    items: [
+      { text: "Manage Subscriptions", link: "/account/manage-subscriptions" },
+      {
+        text: "Notification Preferences",
+        link: "/account/notification-preferences",
+      },
+    ],
+  },
+  {
+    text: "Account Settings",
+    alt: "Account Settings icon",
+    icon: "/account/settings.png",
+    items: [
+      { text: "Privacy Settings", link: "/account/privacy-settings" },
+      {
+        text: "Two-Factor Authentication",
+        link: "/account/two-factor-authentication",
+      },
+    ],
+  },
+  {
+    text: "Gift Cards",
+    icon: "/account/gift-cards.png",
+    items: [
+      {
+        text: "Manage Gift Cards",
+        link: "/account/gift-cards",
+      },
+    ],
   },
 ];
-
-export const sizes = ["XS", "S", "M", "L", "XL"];

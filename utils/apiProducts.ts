@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import { supabase } from "./supabase/client";
 
 // The getProducts function retrieves all the products from the products table in the database.
 export async function getProducts() {
@@ -13,7 +13,7 @@ export async function getProducts() {
 }
 
 // The getProductsByCategory function retrieves all the products from the products table in the database that match the category passed as an argument.
-export async function getProductsByCategory(category) {
+export async function getProductsByCategory(category: string) {
   let { data, error } = await supabase
     .from("products")
     .select("*")
@@ -28,7 +28,7 @@ export async function getProductsByCategory(category) {
 }
 
 // The getProductById function retrieves a product from the products table in the database that matches the id passed as an argument.
-export async function getProductByName(name) {
+export async function getProductByName(name: string) {
   let { data, error } = await supabase
     .from("products_details")
     .select("*")
@@ -59,7 +59,7 @@ export async function getBestSellingProducts() {
 }
 
 // The getProductsBySearch function retrieves all the products from the products table in the database that match the search term passed as an argument.
-export async function getProductsBySearch(search) {
+export async function getProductsBySearch(search: string) {
   let { data, error } = await supabase
     .from("products")
     .select("*")

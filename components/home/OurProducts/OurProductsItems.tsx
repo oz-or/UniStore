@@ -1,7 +1,7 @@
 "use client";
 
 import ProductCard from "@/components/ui/ProductCard";
-import { getProducts } from "@/services/apiProducts";
+import { getProducts } from "@/utils/apiProducts";
 import { useEffect, useState } from "react";
 
 const OurProductsItems = () => {

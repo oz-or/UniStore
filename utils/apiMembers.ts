@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import { supabase } from "./supabase/client";
 
 // The getMembers function retrieves all the members from the members table in the database.
 export async function getMembers() {

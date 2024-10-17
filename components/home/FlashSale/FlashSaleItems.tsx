@@ -1,7 +1,7 @@
 "use client";
 
 import FlashSaleButton from "./FlashSaleButton";
-import { getFlashSaleProducts } from "@/services/apiProducts";
+import { getFlashSaleProducts } from "@/utils/apiProducts";
 import { useEffect, useState } from "react";
 import ProductCard from "@/components/ui/ProductCard";
 

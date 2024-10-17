@@ -2,7 +2,7 @@
 
 import MemberCard from "./MemberCard";
 import { useCallback, useEffect, useState } from "react";
-import { getMembers } from "@/services/apiMembers";
+import { getMembers } from "@/utils/apiMembers";
 
 import useEmblaCarousel from "embla-carousel-react";
 import { DotButton, useDotButton } from "./CarouselDotButton";

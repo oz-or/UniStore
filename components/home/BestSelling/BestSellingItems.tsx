@@ -2,7 +2,7 @@
 
 import ProductCard from "@/components/ui/ProductCard";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { getBestSellingProducts } from "@/services/apiProducts";
+import { getBestSellingProducts } from "@/utils/apiProducts";
 import { useEffect, useState } from "react";
 
 const BestSellingItems = () => {
