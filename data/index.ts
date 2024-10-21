@@ -1,3 +1,5 @@
+import { link } from "fs";
+
 //TODO: Make the links point to the right pages after the pages are created
 export const heroNavLinks = [
   { href: "#", text: "Woman's Fashion" },
@@ -84,76 +86,78 @@ export const achievements = [
 
 export const sizes = ["XS", "S", "M", "L", "XL"];
 
-export const accountAccordionItems = [
+export const accountSidebarItems = [
   {
     text: "Profile",
     alt: "Profile icon",
     icon: "/account/personal-information.png",
-  },
-  {
-    text: "Address Book",
-    alt: "Address Book icon",
-    icon: "/account/address-book.png",
-    items: [{ text: "Manage Addresses", link: "/account/addresses" }],
+    link: "/account",
   },
   {
     text: "Order History",
     alt: "Order History icon",
     icon: "/account/order-history.png",
+    link: "/account/orders",
     items: [
-      { text: "View Orders", link: "/account/orders" },
+      { text: "Orders", link: "/account/orders" },
       { text: "Return Request", link: "/account/return-requests" },
       { text: "Cancellation Requests", link: "/account/cancellation-requests" },
-    ],
-  },
-
-  {
-    text: "Payment Methods",
-    alt: "Payment Methods icon",
-    icon: "/account/payment-methods.png",
-    items: [
-      { text: "Saved Payment Methods", link: "/account/payment-methods" },
-      { text: "Add New Payment Method", link: "/account/add-payment-method" },
     ],
   },
   {
     text: "Wishlist",
     alt: "Wishlist icon",
     icon: "/WishlistHeartFilled.svg",
+    link: "/account/wishlist",
     items: [{ text: "View Wishlist", link: "/account/wishlist" }],
+  },
+  {
+    text: "Payment Methods",
+    alt: "Payment Methods icon",
+    icon: "/account/payment-methods.png",
+    link: "/account/payment-methods",
+    /* items: [
+      { text: "Saved Payment Methods", link: "/account/payment-methods" },
+      { text: "Add New Payment Method", link: "/account/add-payment-method" },
+    ], */
+  },
+
+  {
+    text: "Gift Cards",
+    alt: "Gift Cards icon",
+    icon: "/account/gift-cards.png",
+    link: "/account/gift-cards",
+    /* items: [
+      {
+        text: "Manage Gift Cards",
+        link: "/account/gift-cards",
+      },
+    ], */
   },
   {
     text: "Subscriptions & Notifications",
     alt: "Subscriptions & Notifications icon",
     icon: "/account/notifications.png",
-    items: [
+    link: "/account/subscriptions-notifications",
+    /* items: [
       { text: "Manage Subscriptions", link: "/account/manage-subscriptions" },
       {
         text: "Notification Preferences",
         link: "/account/notification-preferences",
       },
-    ],
+    ], */
   },
   {
     text: "Account Settings",
     alt: "Account Settings icon",
     icon: "/account/settings.png",
-    items: [
+    link: "/account/account-settings",
+    /* items: [
       { text: "Privacy Settings", link: "/account/privacy-settings" },
       {
         text: "Two-Factor Authentication",
         link: "/account/two-factor-authentication",
       },
-    ],
-  },
-  {
-    text: "Gift Cards",
-    icon: "/account/gift-cards.png",
-    items: [
-      {
-        text: "Manage Gift Cards",
-        link: "/account/gift-cards",
-      },
-    ],
+    ], */
   },
 ];
