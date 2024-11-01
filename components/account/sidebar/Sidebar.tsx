@@ -23,12 +23,12 @@ export function Sidebar() {
 
   return (
     <aside
-      className={`bottom-0 1024:translate-x-0 transition-[width] ease-in-out duration-300  absolute top-0 left-0 z-20 1024:static bg-gray-50 opacity-90 rounded-lg 1024:w-[300px] 1200:w-[320px]  
+      className={`bottom-0 1024:translate-x-0 transition-[width] ease-in-out duration-300  absolute top-0 left-0 z-20 1024:static bg-gray-50 opacity-90 rounded-lg 1024:w-[300px] 1200:w-[320px] 
         ${!isOpen ? "w-[45px]" : "w-64"} `}
       onClick={handleOpen}
     >
       <SidebarToggle isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="relative h-full flex flex-col py-4  shadow-md ">
+      <div className="relative h-full 1024:pb-24 flex flex-col py-1  shadow-md ">
         <Menu isOpen={isOpen} />
       </div>
     </aside>

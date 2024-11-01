@@ -30,6 +30,8 @@ const ProductCard = ({
     //TODO: I should probably add like a "Last watched" section to the user's profile under Manage my account, but this is not a priority for now
   };
 
+  console.log("ProductCard rendered");
+
   return (
     <div key={i} className="scale-90 flex flex-col gap-y-4">
       <Link

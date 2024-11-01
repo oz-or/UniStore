@@ -16,8 +16,8 @@ const Profile = () => {
         <h1 className="font-semibold ml-2 500:text-base translate-y-[4px] 750:text-lg 500:translate-y-4 1200:text-2xl 1200:mb-6 1440:text-[26px] 1440:translate-y-6">
           My Profile
         </h1>
-        <div className="flex justify-between shadow-account-rectangle bg-white p-3 1200:p-7 rounded 500:p-5 ">
-          <div className="flex gap-x-2.5 500:gap-x-4">
+        <div className="flex justify-between shadow-account-rectangle bg-white p-3 1200:p-7 rounded 500:p-5  ">
+          <div className="flex gap-x-2.5 500:gap-x-4 1200:gap-x-6">
             <img
               src="/User.svg"
               alt="Profile picture"
@@ -49,7 +49,7 @@ const Profile = () => {
             </button>
           </div>
         </div>
-        <div className="shadow-account-rectangle bg-white p-3 500:p-5 rounded">
+        <div className="shadow-account-rectangle bg-white p-3 500:p-5 1024:p-7 rounded">
           <HeaderAndEdit
             header={"Account Information"}
             handleEdit={handleEdit}
@@ -122,7 +122,7 @@ const Profile = () => {
         </div>
         {/*  */}
         {/*  */}
-        <div className="shadow-account-rectangle bg-white p-3 500:p-5 rounded">
+        <div className="shadow-account-rectangle bg-white p-3 500:p-5 1024:p-7 rounded">
           <HeaderAndEdit header={"Address"} handleEdit={handleEdit} />
           <form className="grid grid-cols-[repeat(2,_125px)] gap-x-8 500:grid-cols-[repeat(2,_180px)] gap-y-3 500:gap-y-4 750:gap-y-8 750:grid-cols-[repeat(2,_250px)]">
             {/* The placeholders should be the actual user data */}

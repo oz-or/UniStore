@@ -1,3 +1,5 @@
+"use client";
+
 import Header from "@/components/Header";
 import FlashSaleItems from "./FlashSaleItems";
 import { flashSaleTimerDate } from "@/lib/helpers";

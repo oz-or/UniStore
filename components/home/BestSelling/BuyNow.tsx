@@ -1,3 +1,5 @@
+"use client";
+
 import { buyNowTimerDate } from "@/lib/helpers";
 import dynamic from "next/dynamic";
 

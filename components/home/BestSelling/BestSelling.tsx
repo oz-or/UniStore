@@ -21,7 +21,7 @@ const BestSelling = () => {
           className="justify-between"
         >
           {/* 
-            TODO: The View All button should take the user to a separate page
+            TODO: The View All button should show the rest of the products
             */}
           <div className="hidden 750:block 1440:mr-4">
             <button className="bg-secondary-2 text-text py-2 px-8 text-xs w-[170px] font-medium 500:py-3 750:text-sm 500:w-[200px] rounded">

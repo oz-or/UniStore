@@ -7,11 +7,8 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { redirect } from "next/navigation";
 
 export default function SignUpPage() {
-  //TODO: Empty the input fields if login is successful and redirect to login page and show a success toast
+  //TODO: Empty the input fields if login is successful and redirect to the previous page that the user was on and show a success toast
   //TODO: The signup and login server actions should receive the data that is being sent from the form (formData: FormData) is what these receive
-  //TODO: Add error handling
-
-  //TODO: The google login button is not working, fix it
 
   const isMoreThan500 = useMediaQuery("(min-width: 500px)");
   const isMoreThan1024 = useMediaQuery("(min-width: 1024px)");
