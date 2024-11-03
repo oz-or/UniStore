@@ -52,6 +52,15 @@ export default function SignUpPage() {
               required
             />
             <input
+              id="car"
+              name="car"
+              type="text"
+              placeholder="car"
+              className="flex h-8 w-full border-b-2 rounded-sm border-b-slate-300 bg-white px-1  text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none  disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-slate-400 "
+              autoComplete="car"
+              required
+            />
+            <input
               id="email"
               name="email"
               type="email"

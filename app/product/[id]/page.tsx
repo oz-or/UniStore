@@ -12,8 +12,12 @@ export async function generateStaticParams() {
   }));
 }
 
-const Page = async ({ params }: { params: { id: string } }) => {
-  const product = await getProductByName(params.id.split("%20").join(" "));
+const Page = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+
+  const filteringName = params.id.split("%20").join(" ");
+
+  const product = await getProductByName(filteringName);
 
   if (!product) return;
 

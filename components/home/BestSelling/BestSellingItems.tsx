@@ -15,8 +15,6 @@ const BestSellingItems = () => {
     });
   }, []);
 
-  console.log(bestSellingItems);
-
   const isMoreThan1440 = useMediaQuery("(min-width: 1440px)");
   return (
     <>
