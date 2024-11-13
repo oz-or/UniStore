@@ -43,23 +43,24 @@ export default function SignUpPage() {
           </div>
           <form className="flex flex-col gap-y-6 1024:gap-y-8">
             <input
-              id="name"
-              name="name"
-              type="name"
-              placeholder="Name"
+              id="firstName"
+              name="firstName"
+              type="text"
+              placeholder="First Name"
               className="flex h-8 w-full border-b-2 rounded-sm border-b-slate-300 bg-white px-1  text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none  disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-slate-400 "
-              autoComplete="name"
+              autoComplete="Firs Name"
               required
             />
             <input
-              id="car"
-              name="car"
+              id="lastName"
+              name="lastName"
               type="text"
-              placeholder="car"
+              placeholder="Last Name"
               className="flex h-8 w-full border-b-2 rounded-sm border-b-slate-300 bg-white px-1  text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none  disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-slate-400 "
-              autoComplete="car"
+              autoComplete="Last Name"
               required
             />
+
             <input
               id="email"
               name="email"

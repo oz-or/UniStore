@@ -26,16 +26,20 @@ export async function login(formData: FormData) {
   redirect("/");
 }
 
-//TODO: The signup function doesnt do anything with the name of the user that I can see
 export async function signup(formData: FormData) {
   const supabase = createClient();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
   const data = {
-    name: formData.get("name") as string,
     email: formData.get("email") as string,
     password: formData.get("password") as string,
+    options: {
+      data: {
+        first_name: formData.get("firstName") as string,
+        last_name: formData.get("lastName") as string,
+      },
+    },
   };
 
   const { error } = await supabase.auth.signUp(data);
