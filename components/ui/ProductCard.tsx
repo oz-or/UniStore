@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import StarRatings from "../StarRatings";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addItemToCart } from "@/app/(auth)/login/actions";
+import { supabase } from "@/utils/supabase/client";
+import { useSession } from "@/contexts/SessionContext/SessionContext";
+import { useCart } from "@/contexts/CartContext/CartContext";
+import { useUser } from "@/contexts/UserContext/UserContext";
 
 const ProductCard = ({
   i,
@@ -16,12 +21,32 @@ const ProductCard = ({
   discount: discountLabel,
   oldPrice,
 }: ProductCardType) => {
+  const { session, loading } = useSession();
+  const { user, setUser } = useUser();
+  const { fetchCartItems } = useCart();
+
   const [isWishlistHeartHovered, setIsWishlistHeartHovered] = useState(false);
 
-  const handleAddToCart = () => {
-    //TODO: Add the product to the user's cart with this function
-  };
+  const handleAddToCart = async () => {
+    if (!user.id) {
+      console.error("User is not logged in");
+      return;
+    }
 
+    const item = {
+      id: i,
+      quantity: 1,
+      size: "xs",
+    };
+
+    try {
+      await addItemToCart(user.id, item);
+      fetchCartItems(); // Update the cart items
+      console.log("Added to cart");
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+    }
+  };
   const handleAddToWishlist = () => {
     //TODO: Add the product to the user's wishlist with this function
   };
@@ -32,8 +57,7 @@ const ProductCard = ({
 
   return (
     <div key={i} className="scale-90 flex flex-col gap-y-4">
-      <Link
-        href={`/product/${name}`}
+      <div
         className="flex flex-col relative bg-secondary items-center "
         onMouseEnter={() => setHovered(i)}
         /* setHovered(-1) hides the Add To Cart button from all items */
@@ -54,12 +78,12 @@ const ProductCard = ({
         <button
           className="bg-primary-1 absolute rounded-full p-1.5 right-2 top-2 w-7 h-auto 750:w-8 "
           onClick={() => handleAddToWishlist()}
-          onMouseEnter={() =>
+          /* onMouseEnter={() =>
             setIsWishlistHeartHovered(!isWishlistHeartHovered)
-          }
-          onMouseLeave={() =>
+          } */
+          /* onMouseLeave={() =>
             setIsWishlistHeartHovered(!isWishlistHeartHovered)
-          }
+          } */
         >
           <img
             src={
@@ -70,23 +94,17 @@ const ProductCard = ({
             alt=""
           />
         </button>
-        <button onClick={() => handleAddToAlreadyViewed()}>
-          <img
-            className="absolute right-2 top-11 w-7 750:w-8 h-auto 750:top-12"
-            src="/Eye.svg"
-            alt=""
-          />
-        </button>
 
         {i === hovered && (
-          <button
-            className="absolute bg-black text-primary-1 w-full rounded p-2.5 bottom-[-10px] opacity-0 animation-appear-bottom"
+          <Link
+            href="/cart"
+            className="absolute bg-black text-primary-1 w-full rounded p-2.5 bottom-[-10px] opacity-0 animation-appear-bottom text-center"
             onClick={() => handleAddToCart()}
           >
             Add To Cart
-          </button>
+          </Link>
         )}
-      </Link>
+      </div>
       <div className="flex flex-col gap-y-2">
         <h3 className="font-medium text-base 500:text-xl ">{name}</h3>
         <div

@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import UserDropDown from "@/components/home/Navbar/UserDropDown";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileMenu from "../Hero/MobileMenu";
 import { usePathname } from "next/navigation";
+
+import { useSession } from "@/contexts/SessionContext/SessionContext";
+import { useCart } from "@/contexts/CartContext/CartContext";
 
 const Navlinks = [
   {
@@ -30,6 +33,8 @@ const Navlinks = [
 const Navbar = () => {
   const [inputValue, setInputValue] = useState("");
 
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+
   const isMoreThan1024 = useMediaQuery("(min-width: 1024px)");
 
   const pathname = usePathname();
@@ -38,9 +43,19 @@ const Navbar = () => {
 
   const [isWishlistHeartHovered, setIsWishlistHeartHovered] = useState(false);
 
-  //These will have to be states
-  let userLoggedIn = true;
-  let userHasItemInCart = true;
+  const { session, loading } = useSession();
+  const { cartItemCount, fetchCartItems } = useCart();
+
+  //TODO: I tried to set the users profile picture conditionally (if the user is logged in) and for this I used the users email, because the profile picture isnt in the database yet.
+
+  useEffect(() => {
+    if (!loading && session) {
+      setUserLoggedIn(true);
+      fetchCartItems();
+    } else {
+      setUserLoggedIn(false);
+    }
+  }, [loading, session, fetchCartItems]);
 
   return (
     <div>
@@ -110,8 +125,8 @@ const Navbar = () => {
                   alt=""
                 />
               </button>
-              {userHasItemInCart ? (
-                <div className="relative">
+              {cartItemCount > 0 ? (
+                <Link href={"/cart"} className="relative">
                   <img
                     className="w-4 h-4 500:w-5 500:h-5 1024:w-6 1024:h-6"
                     src="/Cart.svg"
@@ -119,20 +134,22 @@ const Navbar = () => {
                   />
                   <span className="absolute -top-1 -right-1 w-3 h-3 bg-secondary-2 text-[9px] text-primary-1 rounded-full flex items-center justify-center">
                     <span className="top-[0.25px] absolute">
-                      2
+                      {cartItemCount}
                       {/* TODO: Display the real number of items in the cart here */}
                     </span>
                   </span>
-                </div>
+                </Link>
               ) : (
-                <img
-                  className="w-5 h-5 750:w-6 750:h-6"
-                  src="/Cart.svg"
-                  alt=""
-                />
+                <Link href={"/cart"}>
+                  <img
+                    className="w-5 h-5 750:w-6 750:h-6"
+                    src="/Cart.svg"
+                    alt=""
+                  />
+                </Link>
               )}
 
-              {userLoggedIn && <UserDropDown />}
+              <UserDropDown session={session} userLoggedIn={userLoggedIn} />
             </div>
           </div>
         </nav>

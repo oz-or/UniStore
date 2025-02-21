@@ -110,7 +110,7 @@ export const accountSidebarItems = [
     icon: "/WishlistHeartFilled.svg",
     link: "/account/wishlist",
     items: [{ text: "View Wishlist", link: "/account/wishlist" }],
-  },
+  } /*
   {
     text: "Payment Methods",
     alt: "Payment Methods icon",
@@ -119,7 +119,7 @@ export const accountSidebarItems = [
     /* items: [
       { text: "Saved Payment Methods", link: "/account/payment-methods" },
       { text: "Add New Payment Method", link: "/account/add-payment-method" },
-    ], */
+    ], */ /*
   },
 
   {
@@ -132,8 +132,9 @@ export const accountSidebarItems = [
         text: "Manage Gift Cards",
         link: "/account/gift-cards",
       },
-    ], */
-  },
+    ], */,
+  ,
+  /*},
   {
     text: "Subscriptions & Notifications",
     alt: "Subscriptions & Notifications icon",
@@ -145,8 +146,8 @@ export const accountSidebarItems = [
         text: "Notification Preferences",
         link: "/account/notification-preferences",
       },
-    ], */
-  },
+    ], */ /*
+  }, */
   {
     text: "Account Settings",
     alt: "Account Settings icon",

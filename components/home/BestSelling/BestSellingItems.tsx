@@ -20,20 +20,18 @@ const BestSellingItems = () => {
     <>
       <div className="grid grid-cols-2 750:grid-cols-3 1024:grid-cols-4 1440:grid-cols-5">
         {bestSellingItems.map(
-          (
-            {
-              img,
-              name,
-              price,
-              old_price: oldPrice,
-              rating: starRating,
-              num_ratings: numberOfRatings,
-            },
-            i
-          ) => (
+          ({
+            id,
+            img,
+            name,
+            price,
+            old_price: oldPrice,
+            rating: starRating,
+            num_ratings: numberOfRatings,
+          }) => (
             <ProductCard
-              key={i}
-              i={i}
+              key={id}
+              i={id}
               img={img}
               name={name}
               price={price}

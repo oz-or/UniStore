@@ -1,3 +1,5 @@
+"use client";
+
 import CategoryItems from "./CategoryItems";
 import Header from "@/components/Header";
 

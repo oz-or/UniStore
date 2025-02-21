@@ -1,8 +1,24 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
+"use server";
 
-export function createClient() {
-  const cookieStore = (((cookies() as unknown as UnsafeUnwrappedCookies) as unknown as UnsafeUnwrappedCookies) as unknown as UnsafeUnwrappedCookies);
+type CookieToSet = {
+  name: string;
+  value: string;
+  options?: {
+    path?: string;
+    expires?: Date;
+    maxAge?: number;
+    domain?: string;
+    secure?: boolean;
+    httpOnly?: boolean;
+    sameSite?: "strict" | "lax" | "none";
+  };
+};
+
+const { createServerClient } = require("@supabase/ssr");
+const { cookies } = require("next/headers");
+
+export async function createClient() {
+  const cookieStore = cookies();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -12,18 +28,18 @@ export function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: CookieToSet[]) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             );
-          } catch {
-            // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
+          } catch (error) {
+            console.error("Error setting cookies:", error);
           }
         },
       },
     }
   );
 }
+
+//TODO: This should be an async function, it is written in the Docs. But if I make it async, it shows that the await cookies() is pointless. But that is in the Supabase Auth installation guide. If i make this sync, the browser will throw an error that "Server actions must be async functions". Everything was fine until I tried to access the session of the user in the useUser hook.

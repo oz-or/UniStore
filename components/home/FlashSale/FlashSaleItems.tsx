@@ -19,21 +19,19 @@ const FlashSaleItems = () => {
     <>
       <div className="grid grid-cols-2 750:grid-cols-3 1200:grid-cols-4 1440:grid-cols-5">
         {flashSaleItems.map(
-          (
-            {
-              discount: discountLabel,
-              img,
-              name,
-              price,
-              old_price: oldPrice,
-              rating: starRating,
-              num_ratings: numberOfRatings,
-            },
-            i
-          ) => (
+          ({
+            id,
+            discount: discountLabel,
+            img,
+            name,
+            price,
+            old_price: oldPrice,
+            rating: starRating,
+            num_ratings: numberOfRatings,
+          }) => (
             <ProductCard
-              key={i}
-              i={i}
+              key={id}
+              i={id}
               img={img}
               name={name}
               price={price}

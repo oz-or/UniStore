@@ -5,6 +5,11 @@ import Footer from "@/components/home/Footer/Footer";
 import Navbar from "@/components/home/Navbar/Navbar";
 import Sale from "@/components/home/Navbar/Sale";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import SessionProviderWrapper from "@/contexts/SessionContext/SessionproviderWrapper";
+import { CartProvider } from "@/contexts/CartContext/CartContext";
+import CartProviderWrapper from "@/contexts/CartContext/CartContextWrapper";
+import { User } from "lucide-react";
+import UserProviderWrapper from "@/contexts/UserContext/UserContextWrapper";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,10 +33,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} overflow-x-hidden`}>
         <GoogleOAuthProvider clientId="977318153275-d86vkq2krkje5mbi90m887u5cf428kmg.apps.googleusercontent.com">
-          <Sale />
-          <Navbar />
-          {children}
-          <Footer />
+          <SessionProviderWrapper>
+            <UserProviderWrapper>
+              <CartProviderWrapper>
+                <Sale />
+                <Navbar />
+                {children}
+                <Footer />
+              </CartProviderWrapper>
+            </UserProviderWrapper>
+          </SessionProviderWrapper>
         </GoogleOAuthProvider>
       </body>
     </html>

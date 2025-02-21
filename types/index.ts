@@ -7,6 +7,7 @@ declare type HeroCarouselType = {
 };
 
 declare type ProductsType = {
+  id: number;
   discount?: number;
   img: string;
   name: string;
@@ -47,4 +48,21 @@ declare type MembersType = {
   twitter: string;
   instagram: string;
   linkedIn: string;
+};
+
+declare type ProductCartType = {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  img: string;
+};
+
+declare type CartItemType = {
+  img: string | undefined;
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
 };

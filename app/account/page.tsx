@@ -6,10 +6,11 @@ import Profile from "@/components/account/Profile";
 export default async function PrivatePage() {
   //TODO: Display the first name, the last name the email and the address programmatically(in the placeholder of the Input field)
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
+    console.error("Error fetching user:", error);
     redirect("/login");
   }
 
