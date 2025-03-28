@@ -4,7 +4,6 @@ import CategoryItems from "./CategoryItems";
 import Header from "@/components/Header";
 
 const Categories = () => {
-  //TODO: Add hover states
   return (
     <section
       id="categories"

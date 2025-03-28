@@ -12,7 +12,7 @@ const Profile = () => {
   const { user, loading, setLoading, setUser } = useUser();
   const [imageUrl, setImageUrl] = useState<string>("");
 
-  const [showPasswordChange, setShowPasswordChange] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -40,7 +40,7 @@ const Profile = () => {
   }, [user]);
 
   const handlePasswordChange = () => {
-    setShowPasswordChange(!showPasswordChange);
+    setShowChangePassword(!showChangePassword);
   };
 
   const handleSave = async () => {
@@ -49,62 +49,62 @@ const Profile = () => {
       return;
     }
 
-    setIsEditing(true); // Enter editing mode
-    // Validate fields
-    if (
-      !firstName ||
-      !lastName ||
-      !phone ||
-      !country ||
-      !cityState ||
-      !postalCode ||
-      !taxId
-    ) {
-      toast.error("Please fill in all required fields."); // User feedback for validation error
-      return; // Exit the function if validation fails
-    }
+    if (!isEditing) setIsEditing(true);
 
-    setLoading(true); // Set loading state to true
-    try {
-      const { error: updateError } = await supabase.auth.updateUser({
-        data: {
-          first_name: firstName,
-          last_name: lastName,
-          phone,
-          country,
-          cityState,
-          postalCode,
-          taxId,
-          profile_picture: imageUrl,
-        },
-      });
-
-      if (updateError) {
-        throw updateError;
+    if (isEditing) {
+      if (
+        !firstName ||
+        !lastName ||
+        !phone ||
+        !country ||
+        !cityState ||
+        !postalCode ||
+        !taxId
+      ) {
+        toast.error("Please fill in all required fields.");
+        return;
       }
 
-      // Update local user state
-      setUser((prevUser: User) => ({
-        ...prevUser,
-        user_metadata: {
-          ...prevUser.user_metadata,
-          first_name: firstName,
-          last_name: lastName,
-          phone,
-          country,
-          cityState,
-          postalCode,
-          taxId,
-          profile_picture: imageUrl,
-        },
-      }));
-      toast.success("Profile successfully edited!"); // User feedback on success
-    } catch (error) {
-      console.error("Error updating user profile:", error);
-      toast.error("Failed to update profile. Please try again."); // User feedback on error
-    } finally {
-      setLoading(false); // Set loading state to false
-      setIsEditing(false); // Exit editing mode after save
+      setLoading(true);
+      try {
+        const { error: updateError } = await supabase.auth.updateUser({
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            phone,
+            country,
+            cityState,
+            postalCode,
+            taxId,
+          },
+        });
+
+        if (updateError) {
+          throw updateError;
+        }
+
+        setUser({
+          ...user,
+          user_metadata: {
+            ...user.user_metadata,
+            first_name: firstName,
+            last_name: lastName,
+            phone,
+            country,
+            cityState,
+            postalCode,
+            taxId,
+          },
+        });
+
+        toast.success("Profile successfully edited!");
+      } catch (error) {
+        console.error("Error updating user profile:", error);
+        toast.error("Failed to update profile. Please try again.");
+      } finally {
+        setLoading(false);
+        setIsEditing(false);
+      }
     }
   };
 
@@ -115,30 +115,27 @@ const Profile = () => {
       }
       const file = e.target.files[0];
 
-      // Fetch existing profile pictures
       const { data: existingImages, error: fetchError } = await supabase.storage
         .from("profile-pictures")
-        .list(`${user.id}/`);
+        .list(`${user?.id || ""}/`);
 
       if (fetchError) {
         throw fetchError;
       }
 
-      // Delete existing profile pictures
       if (existingImages && existingImages.length > 0) {
         const deletePromises = existingImages.map((img) =>
           supabase.storage
             .from("profile-pictures")
-            .remove([`${user.id}/${img.name}`])
+            .remove([`${user?.id || ""}/${img.name}`])
         );
 
         await Promise.all(deletePromises);
       }
 
-      // Upload the new profile picture
       const { data: image, error: uploadError } = await supabase.storage
         .from("profile-pictures")
-        .upload(`${user.id}/${file.name}`, file);
+        .upload(`${user?.id || ""}/${file.name}`, file);
 
       if (uploadError) {
         throw uploadError;
@@ -150,12 +147,11 @@ const Profile = () => {
 
       const { data: imgUrl } = supabase.storage
         .from("profile-pictures")
-        .getPublicUrl(`${user.id}/${file.name}`);
+        .getPublicUrl(`${user?.id || ""}/${file.name}`);
 
       if (imgUrl) {
         setImageUrl(imgUrl.publicUrl);
 
-        // Update user's profile picture URL
         const { error: updateError } = await supabase.auth.updateUser({
           data: { profile_picture: imgUrl.publicUrl },
         });
@@ -163,17 +159,20 @@ const Profile = () => {
         if (updateError) {
           console.error("Error updating user profile picture:", updateError);
         } else {
-          setUser({
-            ...user,
-            user_metadata: {
-              ...user.user_metadata,
-              profile_picture: imgUrl.publicUrl,
-            },
-          });
+          if (user && user.id) {
+            setUser({
+              ...user,
+              id: user.id,
+              user_metadata: {
+                ...user.user_metadata,
+                profile_picture: imgUrl.publicUrl,
+              },
+            });
+          }
         }
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error uploading image:", error);
     }
   };
 
@@ -227,7 +226,7 @@ const Profile = () => {
           <div>
             <button
               onClick={handlePasswordChange}
-              className="flex shadow-account-rectangle bg-white px-1 py-0.5 items-center translate-y-[2px]"
+              className="flex shadow-account-rectangle bg-white px-1 py-0.5 items-center translate-y-[2px] "
             >
               <img
                 src="/account/pencil-edit.png"
@@ -240,9 +239,12 @@ const Profile = () => {
             </button>
           </div>
         </div>
-        {showPasswordChange && (
-          <div className="shadow-account-rectangle bg-white p-3 500:p-5 1024:p-7 rounded">
-            <ChangePassword />
+        {showChangePassword && (
+          <div className="shadow-account-rectangle bg-white p-3 500:p-5 1024:p-7 rounded transition-all duration-500 ">
+            <ChangePassword
+              showChangePassword={showChangePassword}
+              setShowChangePassword={setShowChangePassword}
+            />
           </div>
         )}
         <div className="shadow-account-rectangle bg-white p-3 500:p-5 1024:p-7 rounded">
@@ -250,9 +252,9 @@ const Profile = () => {
             header={"Account Information"}
             handleEdit={handleSave}
             isEditing={isEditing}
+            loading={loading}
           />
           <form className="grid grid-cols-[repeat(2,_125px)] gap-x-8 500:grid-cols-[repeat(2,_180px)] gap-y-3 500:gap-y-4 750:gap-y-8 750:grid-cols-[repeat(2,_250px)]">
-            {/* The placeholders should be the actual user data */}
             <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
               <label
                 htmlFor="firstName"
@@ -319,13 +321,9 @@ const Profile = () => {
             </div>
           </form>
         </div>
-        {/*  */}
-        {/*  */}
         <div className="shadow-account-rectangle bg-white p-3 500:p-5 1024:p-7 rounded">
           <HeaderAndEdit header={"Address"} />
           <form className="grid grid-cols-[repeat(2,_125px)] gap-x-8 500:grid-cols-[repeat(2,_180px)] gap-y-3 500:gap-y-4 750:gap-y-8 750:grid-cols-[repeat(2,_250px)]">
-            {/* The placeholders should be the actual user data */}
-
             <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
               <label
                 htmlFor="country"

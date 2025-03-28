@@ -2,10 +2,12 @@ const HeaderAndEdit = ({
   header,
   handleEdit,
   isEditing,
+  loading,
 }: {
   header: string;
   handleEdit?: () => void;
   isEditing?: boolean;
+  loading?: boolean;
 }) => {
   return (
     <div className="flex justify-between items-center mb-3 500:mb-5 750:mb-8">
@@ -15,6 +17,7 @@ const HeaderAndEdit = ({
       {handleEdit && (
         <button
           onClick={handleEdit}
+          disabled={loading}
           className="flex shadow-account-rectangle px-1 py-0.5 items-center translate-y-[2px]"
         >
           <img

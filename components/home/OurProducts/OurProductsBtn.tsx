@@ -1,6 +1,6 @@
 "use client";
 
-const FlashSaleButton = ({
+const OurProductsBtn = ({
   viewAll,
   setViewAll,
 }: {
@@ -22,4 +22,4 @@ const FlashSaleButton = ({
   );
 };
 
-export default FlashSaleButton;
+export default OurProductsBtn;

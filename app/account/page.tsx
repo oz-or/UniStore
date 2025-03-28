@@ -4,7 +4,6 @@ import { createClient } from "@/utils/supabase/server";
 import Profile from "@/components/account/Profile";
 
 export default async function PrivatePage() {
-  //TODO: Display the first name, the last name the email and the address programmatically(in the placeholder of the Input field)
 
   const supabase = await createClient();
 

@@ -135,7 +135,6 @@ const Navbar = () => {
                   <span className="absolute -top-1 -right-1 w-3 h-3 bg-secondary-2 text-[9px] text-primary-1 rounded-full flex items-center justify-center">
                     <span className="top-[0.25px] absolute">
                       {cartItemCount}
-                      {/* TODO: Display the real number of items in the cart here */}
                     </span>
                   </span>
                 </Link>

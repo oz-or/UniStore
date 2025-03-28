@@ -1,29 +1,54 @@
 "use client";
 
 import ProductCard from "@/components/ui/ProductCard";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { getProducts } from "@/utils/apiProducts";
 import { useEffect, useState } from "react";
+import OurProductsBtn from "./OurProductsBtn";
 
 const OurProductsItems = () => {
-  const [showAllItems, setShowAllItems] = useState(false);
-  const [products, setProducts] = useState<ProductsType[]>([]);
-
+  const [ourProductsItems, setOurProductsItems] = useState<ProductsType[]>([]);
   const [hovered, setHovered] = useState(0);
+
+  const [itemsToRender, setItemsToRender] = useState<ProductsType[]>([]);
+  const [viewAll, setViewAll] = useState(false);
+
+  const isMoreThan750 = useMediaQuery("(min-width: 750px)");
+  const isMoreThan1200 = useMediaQuery("(min-width: 1200px)");
+  const isMoreThan1440 = useMediaQuery("(min-width: 1440px)");
 
   useEffect(() => {
     getProducts().then((data) => {
-      data !== null && setProducts(data);
+      data !== null && setOurProductsItems(data);
     });
   }, []);
 
-  const handleShowitems = () => {
-    setShowAllItems(!showAllItems);
-  };
+  useEffect(() => {
+    if (viewAll) {
+      setItemsToRender(ourProductsItems);
+    } else {
+      if (isMoreThan1440) {
+        setItemsToRender(ourProductsItems.slice(0, 5));
+      } else if (isMoreThan1200) {
+        setItemsToRender(ourProductsItems.slice(0, 4));
+      } else if (isMoreThan750) {
+        setItemsToRender(ourProductsItems.slice(0, 3));
+      } else {
+        setItemsToRender(ourProductsItems.slice(0, 2));
+      }
+    }
+  }, [
+    ourProductsItems,
+    viewAll,
+    isMoreThan750,
+    isMoreThan1200,
+    isMoreThan1440,
+  ]);
 
   return (
     <>
       <div className="grid grid-cols-2 750:grid-cols-3 1200:grid-cols-4 1440:grid-cols-5">
-        {products.map(
+        {itemsToRender.map(
           ({
             id,
             img,
@@ -46,17 +71,7 @@ const OurProductsItems = () => {
           )
         )}
       </div>
-      {/* 
-        TODO: Render 1 row of products here from the DB. The rest should appear when the user clicks on the view all products button
-        */}
-      <div className="flex justify-center mt-4 750:mt-6 1024:mt-8">
-        <button
-          onClick={handleShowitems}
-          className="bg-secondary-2 text-text py-3 px-10 text-sm  font-medium 500:py-3 750:text-sm 500:w-[220px] rounded"
-        >
-          {!showAllItems ? "View All Products" : "Show Less"}
-        </button>
-      </div>
+      <OurProductsBtn viewAll={viewAll} setViewAll={setViewAll} />
     </>
   );
 };

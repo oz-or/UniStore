@@ -5,7 +5,6 @@ import BestSellingItems from "./BestSellingItems";
 import BuyNow from "./BuyNow";
 import Header from "@/components/Header";
 
-//TODO: Create the BestSelling component (literally copy-paste the FlashSales and FlashSaleItems components and refactor them)
 const BestSelling = () => {
   const isMoreThan750 = useMediaQuery("(min-width: 750px)");
 
