@@ -161,6 +161,20 @@ export async function getUserCartItems() {
   return cartItems; // Return the retrieved cart items
 }
 
+export const updateCartItemQuantity = async (id: number, quantity: number) => {
+  const supabase = await createClient(); // Ensure the client is created properly
+
+  const { error } = await supabase
+    .from("cart_items") // Ensure this is the correct table name
+    .update({ quantity }) // Ensure "quantity" is the correct column name
+    .eq("id", id); // Ensure "id" is the correct column for identifying the item
+
+  if (error) {
+    console.error("Error updating cart item quantity:", error.message);
+    throw new Error("Failed to update cart item quantity.");
+  }
+};
+
 export async function deleteCartItem(itemId: number) {
   const supabase = await createClient();
 
@@ -179,11 +193,40 @@ export async function deleteCartItem(itemId: number) {
   }
 }
 
-/* Uploading the user's profile picture */
+/* Coupon validation */
 
-/* I need functions: */
-//  First that uploads(with the help of a supabase trigger function) to the storage bucket
-//  Second that updates the user's profile picture column in the users table from the profile picture that was uploaded to the storage bucket
-//  Third that fetches the user's profile picture from the storage bucket so that it can be displayed in the UI
+export async function validateCoupon(couponCode: string, subtotal: number) {
+  const supabase = await createClient();
+  try {
+    // Query the database for the coupon code
+    const { data: coupon, error } = await supabase
+      .from("coupons")
+      .select("*")
+      .eq("code", couponCode)
+      .single();
 
-//First function that uploads the received file to the storage bucket
+    if (error || !coupon) {
+      return { valid: false, error: "Invalid coupon code." };
+    }
+
+    if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) {
+      return { valid: false, error: "This coupon has expired." };
+    }
+
+    if (subtotal >= 400) {
+      return {
+        valid: false,
+        error: "Coupon is only valid for orders below $400.",
+      };
+    }
+
+    // Return the discount percentage if the coupon is valid
+    return { valid: true, discount: coupon.discount };
+  } catch (err) {
+    console.error("Error validating coupon:", err);
+    return {
+      valid: false,
+      error: "An error occurred while validating the coupon.",
+    };
+  }
+}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { User } from "@supabase/supabase-js";
 import HeaderAndEdit from "./HeaderAndEdit";
 import ChangePassword from "@/components/account/profile/ChangePassword";
 import { supabase } from "@/utils/supabase/client";
@@ -193,17 +192,15 @@ const Profile = () => {
               <img
                 src={imageUrl}
                 alt="Profile picture"
-                className=" w-11  500:w-16 750:w-[72px] 1200:w-[84px] 1440:w-24 h-11  500:h-16 750:h-[72px] 1200:h-[84px] 1440:h-24"
+                className=" w-11 500:w-16 750:w-[72px] 1200:w-[84px] 1440:w-24 h-11  500:h-16 750:h-[72px] 1200:h-[84px] 1440:h-24"
               />
               <label
                 htmlFor="profilePicture"
                 className="absolute w-11 500:w-16 750:w-[72px] 1200:w-[84px] 1440:w-24 h-11  500:h-16 750:h-[72px] 1200:h-[84px] 1440:h-24 inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-full cursor-pointer"
               >
-                <img
-                  src="/account/pencil-edit.png"
-                  alt="Upload"
-                  className="w-6 h-6 500:w-8 500:h-8"
-                />
+                <span className="text-[8px] 500:text-xs font-semibold 1200:text-base text-white">
+                  Change
+                </span>
                 <input
                   type="file"
                   id="profilePicture"
@@ -213,7 +210,7 @@ const Profile = () => {
               </label>
             </div>
 
-            <div className="flex flex-col 750:gap-y-1.5 1440:gap-y-2.5">
+            <div className="flex flex-col 500:gap-y-1.5 1440:gap-y-2.5">
               <span className="font-semibold text-[13px] 500:text-base 750:text-lg 1200:text-xl 1440:text-2xl">
                 {firstName} {lastName}
               </span>
@@ -233,7 +230,7 @@ const Profile = () => {
                 alt="Edit"
                 className="w-2 mr-1 ml-0.5 750:w-[11px] 1440:w-3"
               />
-              <span className="opacity-75 text-[7px] 500:text-[10px] 750:text-xs 1440:text-[13px]">
+              <span className="opacity-75 text-[7px] 500:text-[10px] 500:text-[13px] 750:text-xs 1440:text-[13px]">
                 Change Password
               </span>
             </button>
@@ -255,10 +252,10 @@ const Profile = () => {
             loading={loading}
           />
           <form className="grid grid-cols-[repeat(2,_125px)] gap-x-8 500:grid-cols-[repeat(2,_180px)] gap-y-3 500:gap-y-4 750:gap-y-8 750:grid-cols-[repeat(2,_250px)]">
-            <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
+            <div className="text-[10px] 500:text-[13px] mb-2 flex flex-col 500:gap-y-1 1200:gap-y-2">
               <label
                 htmlFor="firstName"
-                className="text-[9px] opacity-60 h-2.5 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
+                className="text-[9px] opacity-60 h-4 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
               >
                 First Name
               </label>
@@ -268,13 +265,13 @@ const Profile = () => {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 disabled={!isEditing}
-                className="h-6 placeholder:text-[9px] pl-0 flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent file:font-medium focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent  disabled:font-medium  disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px]"
+                className="h-4 placeholder:text-[9px] 500:h-6 pl-[3px] disabled:pl-0 750:h-[28px] flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2 ring-offset-white file:border-0 file:bg-transparent  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent   disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px] 1200:text-[15px]"
               />
             </div>
-            <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
+            <div className="text-[10px] 500:text-[13px] mb-2 flex flex-col 500:gap-y-1 1200:gap-y-2">
               <label
                 htmlFor="lastName"
-                className="text-[9px] opacity-60 h-2.5 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
+                className="text-[9px] opacity-60 h-4 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
               >
                 Last Name
               </label>
@@ -284,13 +281,13 @@ const Profile = () => {
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 disabled={!isEditing}
-                className="h-6 placeholder:text-[9px] pl-0 flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent file:font-medium focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent  disabled:font-medium  disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px)"
+                className="h-4 placeholder:text-[9px] 500:h-6 pl-[3px] disabled:pl-0 750:h-[28px] flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent    disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px] 1200:text-[15px]"
               />
             </div>
-            <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
+            <div className="text-[10px] 500:text-[13px] flex flex-col 500:gap-y-1 1200:gap-y-2">
               <label
                 htmlFor="email"
-                className="text-[9px] opacity-60 h-2.5 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
+                className="text-[9px] opacity-60 h-4 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
               >
                 Email Address
               </label>
@@ -300,13 +297,13 @@ const Profile = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={!isEditing}
-                className="h-6 placeholder:text-[9px] pl-0 flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent file:font-medium focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent  disabled:font-medium  disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px)"
+                className="h-4 placeholder:text-[9px] 500:h-6 pl-[3px] disabled:pl-0 750:h-[28px] flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent    disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px] 1200:text-[15px]"
               />
             </div>
-            <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
+            <div className="text-[10px] 500:text-[13px] flex flex-col 500:gap-y-1 1200:gap-y-2">
               <label
                 htmlFor="phone"
-                className="text-[9px] opacity-60 h-2.5 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
+                className="text-[9px] opacity-60 h-4 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
               >
                 Phone
               </label>
@@ -316,7 +313,7 @@ const Profile = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 disabled={!isEditing}
-                className="h-6 placeholder:text-[9px] pl-0 flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent file:font-medium focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent  disabled:font-medium  disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[12px] 1200:placeholder:text-sm"
+                className="h-4 placeholder:text-[9px] 500:h-6 pl-[3px] disabled:pl-0 750:h-[28px] flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent    disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[12px] 1200:placeholder:text-sm"
               />
             </div>
           </form>
@@ -324,10 +321,10 @@ const Profile = () => {
         <div className="shadow-account-rectangle bg-white p-3 500:p-5 1024:p-7 rounded">
           <HeaderAndEdit header={"Address"} />
           <form className="grid grid-cols-[repeat(2,_125px)] gap-x-8 500:grid-cols-[repeat(2,_180px)] gap-y-3 500:gap-y-4 750:gap-y-8 750:grid-cols-[repeat(2,_250px)]">
-            <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
+            <div className="text-[10px] 500:text-[13px] flex flex-col 500:gap-y-1 1200:gap-y-2">
               <label
                 htmlFor="country"
-                className="text-[9px] opacity-60 h-2.5 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
+                className="text-[9px] opacity-60 h-4 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
               >
                 Country
               </label>
@@ -337,13 +334,13 @@ const Profile = () => {
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 disabled={!isEditing}
-                className="h-6 placeholder:text-[9px] pl-0 flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent file:font-medium focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent  disabled:font-medium  disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px]"
+                className="h-4 placeholder:text-[9px] 500:h-6 pl-[3px] disabled:pl-0 750:h-[28px] flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent    disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px] 1200:text-[15px] 1200:text-[15px]"
               />
             </div>
-            <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
+            <div className="text-[10px] 500:text-[13px] flex flex-col 500:gap-y-1 1200:gap-y-2">
               <label
                 htmlFor="cityState"
-                className="text-[9px] opacity-60 h-2.5 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
+                className="text-[9px] opacity-60 h-4 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
               >
                 City/State
               </label>
@@ -353,13 +350,13 @@ const Profile = () => {
                 value={cityState}
                 onChange={(e) => setCityState(e.target.value)}
                 disabled={!isEditing}
-                className="h-6 placeholder:text-[9px] pl-0 flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent file:font-medium focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent  disabled:font-medium  disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px]"
+                className="h-4 placeholder:text-[9px] 500:h-6 pl-[3px] disabled:pl-0 750:h-[28px] flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent    disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px] 1200:text-[15px] 1200:text-[15px]"
               />
             </div>
-            <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
+            <div className="text-[10px] 500:text-[13px] flex flex-col 500:gap-y-1 1200:gap-y-2">
               <label
                 htmlFor="postalcode"
-                className="text-[9px] opacity-60 h-2.5 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
+                className="text-[9px] opacity-60 h-4 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
               >
                 Postal Code
               </label>
@@ -370,14 +367,14 @@ const Profile = () => {
                 onChange={(e) => setPostalCode(e.target.value)}
                 disabled={!isEditing}
                 placeholder="Enter your postal code"
-                className="h-6 placeholder:text-[9px] pl-0 flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent file:font-medium focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent  disabled:font-medium  disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px]"
+                className="h-4 placeholder:text-[9px] 500:h-6 pl-[3px] disabled:pl-0 750:h-[28px] flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent    disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px] 1200:text-[15px] 1200:text-[15px]"
               />
             </div>
 
-            <div className="text-xs flex flex-col 750:gap-y-1 1200:gap-y-3">
+            <div className="text-[10px] 500:text-[13px] flex flex-col 500:gap-y-1 1200:gap-y-2">
               <label
                 htmlFor="taxId"
-                className="text-[9px] opacity-60 h-2.5 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
+                className="text-[9px] opacity-60 h-4 500:text-[13px] 500:h-[18px] 1200:text-[15px] "
               >
                 TAX ID
               </label>
@@ -388,7 +385,7 @@ const Profile = () => {
                 onChange={(e) => setTaxId(e.target.value)}
                 disabled={!isEditing}
                 placeholder="Enter your TAX ID"
-                className="h-6 placeholder:text-[9px] pl-0 flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent file:font-medium focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent  disabled:font-medium  disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px]"
+                className="h-4 placeholder:text-[9px] 500:h-6 pl-[3px] disabled:pl-0 750:h-[28px] flex w-full disabled:placeholder-gray-500 rounded-md border border-slate-200 bg-white px-3 py-2  ring-offset-white file:border-0 file:bg-transparent  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:bg-gray-100  disabled:ring-offset-white disabled:ring-offset-0 disabled:ring-0 disabled:border-0 disabled:bg-transparent    disabled:focus-visible:outline-none disabled:focus-visible:ring-2 500:placeholder:text-[13px] 1200:placeholder:text-[15px] 1200:text-[15px] 1200:text-[15px]"
               />
             </div>
           </form>

@@ -2,7 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import NavigationHeading from "@/components/NavigationHeading";
-import { deleteCartItem, getUserCartItems } from "../(auth)/login/actions";
+import {
+  deleteCartItem,
+  getUserCartItems,
+  updateCartItemQuantity,
+} from "../(auth)/login/actions";
 import { useSession } from "@/contexts/SessionContext/SessionContext";
 import { useCart } from "@/contexts/CartContext/CartContext";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,6 +15,8 @@ const CartPage = () => {
   const { session, loading } = useSession();
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const { cartItemCount, fetchCartItems } = useCart();
+
+  //TODO: The UI of the cart items at 375px width is not looking good, fix it
 
   useEffect(() => {
     if (!loading && session) {
@@ -23,17 +29,30 @@ const CartPage = () => {
     }
   }, [loading, session]);
 
-  const calculateSubtotal = () => {
+ const calculateSubtotal = () => {
     return cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
   };
 
-  const handleQuantityChange = (id: number, quantity: number) => {
+  const handleQuantityChange = async (id: number, quantity: number) => {
+    // Optimistically update the local state
+    const previousCartItems = [...cartItems];
     setCartItems((prevItems) =>
       prevItems.map((item) => (item.id === id ? { ...item, quantity } : item))
     );
+
+    try {
+      // Update the database
+      await updateCartItemQuantity(id, quantity);
+      toast.success("Quantity updated successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update quantity. Reverting changes.");
+      // Roll back to the previous state
+      setCartItems(previousCartItems);
+    }
   };
 
   const handleDeleteItem = (id: number) => {
@@ -84,7 +103,7 @@ const CartPage = () => {
     <div className="max-w-full mx-auto px-4 py-8 500:max-w-[500px] 750:max-w-[750px] 1024:max-w-[1024px] 1200:max-w-[1200px] 1440:max-w-[1440px] 500:mb-12 1200:mb-20">
       <Toaster />
       <div className="1440:pl-8">
-        <NavigationHeading pageName="Cart" />
+        <NavigationHeading pageName1="Cart" />
       </div>
 
       <h1 className="text-xl font-semibold text-center 1200:text-3xl mb-4 500:mb-6 500:text-2xl 1440:text-4xl 1200:mb-10">

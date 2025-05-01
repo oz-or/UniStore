@@ -30,7 +30,8 @@ const ResetPassword = () => {
   return (
     <div>
       <button
-        className="text-secondary-2 underline"
+        className="Text-secondary-2 underline"
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
         Reset Password

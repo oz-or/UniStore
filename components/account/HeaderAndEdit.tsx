@@ -18,7 +18,9 @@ const HeaderAndEdit = ({
         <button
           onClick={handleEdit}
           disabled={loading}
-          className="flex shadow-account-rectangle px-1 py-0.5 items-center translate-y-[2px]"
+          className={`flex shadow-account-rectangle px-1 py-0.5 items-center translate-y-[2px] rounded ${
+            isEditing && "animate-pop"
+          }`}
         >
           <img
             src="/account/pencil-edit.png"

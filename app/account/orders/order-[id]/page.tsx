@@ -1,6 +1,7 @@
 import { ChevronLeft } from "lucide-react";
 
 const page = () => {
+  //TODO: a rendelt item tulajdonságait hasznáni itt porgrammatikusan
   return (
     <main className="ml-[52px] mt-2.5 750:ml-[70px] 750:mr-5 px-2  1024:pb-20 1024:mx-8 1440:mr-0">
       <section id="myProfile" className="grid gap-y-4 500:gap-y-7 ">
