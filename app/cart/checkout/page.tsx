@@ -5,10 +5,17 @@ import NavigationHeading from "@/components/NavigationHeading";
 import { useCart } from "@/contexts/CartContext/CartContext";
 import { useSession } from "@/contexts/SessionContext/SessionContext";
 import { useEffect, useState } from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import TransferInAdvance from "@/components/checkout/TransferInAdvance";
 
 // TODO: 5. Integrate payment options with the backend.
 //Billing Form Validation.
 // TODO: 6. Validate billing form inputs before submission.
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 const CheckoutPage = () => {
   const { session, loading } = useSession();
@@ -81,6 +88,11 @@ const CheckoutPage = () => {
 
   const toggleTransferMenu = () => {
     setShowTransferMenu(true);
+  };
+
+  const handlePaymentSuccess = () => {
+    console.log("Payment was successful!");
+    // Perform any additional actions, such as redirecting the user
   };
 
   useEffect(() => {
@@ -253,54 +265,17 @@ const CheckoutPage = () => {
                   name="payment"
                   value="Transfer in Advance"
                   className="mr-2"
-                  onChange={handlePaymentChange}
-                />{" "}
+                  onChange={(e) => setSelectedPayment(e.target.value)}
+                />
                 Transfer in Advance
               </label>
               {selectedPayment === "Transfer in Advance" && (
-                <div className="mt-4 p-4 border rounded-lg bg-gray-50">
-                  <h3 className="text-lg font-semibold mb-4">Add a Card</h3>
-                  <form className="space-y-4">
-                    <input
-                      type="text"
-                      className="w-full p-3 border rounded-lg focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
-                      placeholder="Card Number"
-                      required
-                    />
-                    <input
-                      type="text"
-                      className="w-full p-3 border rounded-lg focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
-                      placeholder="Cardholder Name"
-                      required
-                    />
-                    <div className="flex gap-4">
-                      <input
-                        type="text"
-                        className="w-1/2 p-3 border rounded-lg focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
-                        placeholder="Expiration Date (MM/YY)"
-                        required
-                      />
-                      <input
-                        type="text"
-                        className="w-1/2 p-3 border rounded-lg focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
-                        placeholder="CVV"
-                        required
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full bg-secondary-2 text-white py-3 rounded-lg hover:bg-red-600 transition"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        alert(
-                          "Card added successfully! (Database integration pending)"
-                        );
-                      }}
-                    >
-                      Add Card
-                    </button>
-                  </form>
-                </div>
+                <Elements stripe={stripePromise}>
+                  <TransferInAdvance
+                    total={total}
+                    onPaymentSuccess={handlePaymentSuccess}
+                  />
+                </Elements>
               )}
             </div>
           </div>

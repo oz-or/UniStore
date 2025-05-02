@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
-import { supabase } from "@/utils/supabase/client";
+import Stripe from "stripe";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -228,5 +228,26 @@ export async function validateCoupon(couponCode: string, subtotal: number) {
       valid: false,
       error: "An error occurred while validating the coupon.",
     };
+  }
+}
+
+/* Stripe */
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2025-04-30.basil",
+});
+
+export async function createPaymentIntent(amount: number) {
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount * 100, // Amount in cents
+      currency: "usd",
+      payment_method_types: ["card"],
+    });
+
+    return { clientSecret: paymentIntent.client_secret };
+  } catch (error) {
+    console.error("Error creating payment intent:", error);
+    throw new Error("Failed to create payment intent.");
   }
 }
