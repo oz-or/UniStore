@@ -10,6 +10,8 @@ import {
 import { useSession } from "@/contexts/SessionContext/SessionContext";
 import { useCart } from "@/contexts/CartContext/CartContext";
 import toast, { Toaster } from "react-hot-toast";
+import { link } from "fs";
+import router from "next/router";
 
 const CartPage = () => {
   const { session, loading } = useSession();
@@ -29,7 +31,7 @@ const CartPage = () => {
     }
   }, [loading, session]);
 
- const calculateSubtotal = () => {
+  const calculateSubtotal = () => {
     return cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
       0
@@ -225,7 +227,10 @@ const CartPage = () => {
               ${calculateSubtotal()}
             </span>
           </div>
-          <button className="w-full bg-secondary-2 text-white text-sm 500:text-base 750:text-lg 1024:text-xl py-2 rounded-md  ease-in-out hover:bg-secondary-3 mt-2 hover:bg-red-600 transition-colors duration-200">
+          <button
+            onClick={() => router.push("/checkout")}
+            className="w-full bg-secondary-2 text-white text-sm 500:text-base 750:text-lg 1024:text-xl py-2 rounded-md  ease-in-out hover:bg-secondary-3 mt-2 hover:bg-red-600 transition-colors duration-200"
+          >
             Proceed to Checkout
           </button>
         </div>

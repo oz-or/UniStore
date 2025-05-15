@@ -251,3 +251,85 @@ export async function createPaymentIntent(amount: number) {
     throw new Error("Failed to create payment intent.");
   }
 }
+
+/* Saving billing details into public.profiles - billing_details*/
+export const saveBillingDetailsToProfile = async (
+  userId: string,
+  billingDetails: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    city: string;
+    address: string;
+    apartment: string;
+  }
+) => {
+  const supabase = await createClient();
+  try {
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        billing_details: billingDetails, // Only this, not address/city/etc.
+      })
+      .eq("id", userId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    console.log("Billing details saved successfully!");
+  } catch (err) {
+    console.error("Error saving billing details:", err);
+    throw err;
+  }
+};
+
+/* Placing Order */
+export const placeOrder = async (
+  userId: string,
+  cartItems: {
+    product_id: string;
+    quantity: number;
+    price: number;
+    // You can add other fields if needed, e.g. name, img, etc.
+  }[],
+  total: number
+) => {
+  const supabase = await createClient();
+
+  try {
+    // Insert the order with the items array as JSONB
+    const { data: order, error: orderError } = await supabase
+      .from("orders")
+      .insert([
+        {
+          user_id: userId,
+          total: total,
+          status: "Ordered",
+          items: cartItems, // Store the items as JSONB
+        },
+      ])
+      .select()
+      .single();
+
+    if (orderError) {
+      throw new Error(orderError.message);
+    }
+
+    // Clear the cart for the user
+    const { error: clearCartError } = await supabase
+      .from("cart_items")
+      .delete()
+      .eq("user_id", userId);
+
+    if (clearCartError) {
+      throw new Error(clearCartError.message);
+    }
+
+    return order.id;
+  } catch (error) {
+    console.error("Error placing order:", error);
+    throw error;
+  }
+};

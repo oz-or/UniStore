@@ -1,6 +1,10 @@
 "use client";
 
-import { getUserCartItems, validateCoupon } from "@/app/(auth)/login/actions";
+import {
+  getUserCartItems,
+  validateCoupon,
+  saveBillingDetailsToProfile,
+} from "@/app/(auth)/login/actions";
 import NavigationHeading from "@/components/NavigationHeading";
 import { useCart } from "@/contexts/CartContext/CartContext";
 import { useSession } from "@/contexts/SessionContext/SessionContext";
@@ -8,10 +12,8 @@ import { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import TransferInAdvance from "@/components/checkout/TransferInAdvance";
-
-// TODO: 5. Integrate payment options with the backend.
-//Billing Form Validation.
-// TODO: 6. Validate billing form inputs before submission.
+import PlaceOrderBtn from "@/components/checkout/PlaceOrderBtn";
+import { useRouter } from "next/navigation";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -28,7 +30,28 @@ const CheckoutPage = () => {
   const { cartItemCount, fetchCartItems } = useCart();
   const [selectedPayment, setSelectedPayment] = useState("");
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState("");
-  const [showTransferMenu, setShowTransferMenu] = useState(false);
+  const [billingInfo, setBillingInfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    city: "",
+    address: "",
+    apartment: "",
+  });
+  const [saveInfo, setSaveInfo] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && session) {
+      // Fetch cart items
+      getUserCartItems().then((cartItems) => {
+        if (cartItems) {
+          setCartItems(cartItems);
+        }
+      });
+    }
+  }, [loading, session]);
 
   const handleApplyCoupon = async () => {
     setIsApplyingCoupon(true);
@@ -86,25 +109,11 @@ const CheckoutPage = () => {
     setSelectedDeliveryOption(e.target.value);
   };
 
-  const toggleTransferMenu = () => {
-    setShowTransferMenu(true);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const updatedBillingInfo = { ...billingInfo, [name]: value };
+    setBillingInfo(updatedBillingInfo);
   };
-
-  const handlePaymentSuccess = () => {
-    console.log("Payment was successful!");
-    // Perform any additional actions, such as redirecting the user
-  };
-
-  useEffect(() => {
-    if (!loading && session) {
-      getUserCartItems().then((cartItems) => {
-        if (cartItems) {
-          console.log("Cart items:", cartItems);
-          setCartItems(cartItems);
-        }
-      });
-    }
-  }, [loading, session]);
 
   return (
     <div className="max-w-full mx-auto px-4 py-8 500:max-w-[500px] 750:max-w-[750px] 1024:max-w-[1024px] 1200:max-w-[1200px] 1440:max-w-[1440px] 500:mb-12 1200:mb-20">
@@ -116,45 +125,61 @@ const CheckoutPage = () => {
         {/* Billing Form */}
         <div className="space-y-4">
           <input
-            className="w-full p-2 border rounded focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none "
+            className="w-full p-2 border rounded focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
             type="text"
+            name="firstName"
             placeholder="First Name*"
+            value={billingInfo.firstName}
+            onChange={handleInputChange}
           />
           <input
             className="w-full p-2 border rounded focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
             type="text"
+            name="lastName"
             placeholder="Last Name*"
+            value={billingInfo.lastName}
+            onChange={handleInputChange}
           />
           <input
             className="w-full p-2 border rounded focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
             type="email"
+            name="email"
             placeholder="Email Address*"
+            value={billingInfo.email}
+            onChange={handleInputChange}
           />
           <input
             className="w-full p-2 border rounded focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
             type="text"
+            name="phone"
             placeholder="Phone Number*"
+            value={billingInfo.phone}
+            onChange={handleInputChange}
           />
           <input
             className="w-full p-2 border rounded focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
             type="text"
+            name="city"
             placeholder="Town/City*"
+            value={billingInfo.city}
+            onChange={handleInputChange}
           />
           <input
             className="w-full p-2 border rounded focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
             type="text"
+            name="address"
             placeholder="Street Address*"
+            value={billingInfo.address}
+            onChange={handleInputChange}
           />
           <input
             className="w-full p-2 border rounded focus:border-secondary-2 focus:ring-secondary-2 focus:outline-none"
             type="text"
+            name="apartment"
             placeholder="Apartment, floor, etc. (optional)"
+            value={billingInfo.apartment}
+            onChange={handleInputChange}
           />
-
-          <div className="flex items-center">
-            <input type="checkbox" className="mr-2" />
-            <label>Save this information for faster check-out next time</label>
-          </div>
         </div>
 
         {/* Order Summary */}
@@ -257,7 +282,7 @@ const CheckoutPage = () => {
               )}
             </div>
 
-            {/* Transfer in Advance */}
+            {/* Transfer in Advance / Stripe */}
             <div>
               <label className="flex items-center mb-2">
                 <input
@@ -273,7 +298,9 @@ const CheckoutPage = () => {
                 <Elements stripe={stripePromise}>
                   <TransferInAdvance
                     total={total}
-                    onPaymentSuccess={handlePaymentSuccess}
+                    onPaymentSuccess={() => {
+                      console.log("Payment was successful!");
+                    }}
                   />
                 </Elements>
               )}
@@ -311,9 +338,23 @@ const CheckoutPage = () => {
           )}
 
           {/* Place Order Button */}
-          <button className="w-full mt-6 bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition">
-            Place Order
-          </button>
+          <PlaceOrderBtn
+            billingInfo={billingInfo}
+            userId={session?.user?.id || ""}
+            cartItems={cartItems.map((item) => ({
+              product_id: item.id.toString(),
+              quantity: item.quantity,
+              price: item.price,
+              name: item.name ?? "",
+              img: item.img ?? "",
+            }))}
+            total={total}
+            onOrderPlaced={(orderId) => {
+              console.log("Order placed successfully with ID:", orderId);
+              saveBillingDetailsToProfile(session?.user?.id || "", billingInfo);
+              router.push(`/cart/checkout/success?orderId=${orderId}`);
+            }}
+          />
         </div>
       </div>
     </div>
