@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SizesAndBtns from "./SizesAndBtns";
+import Btns from "./Btns";
 import StarRatings from "../StarRatings";
 
 const ProductInfo = ({
@@ -9,7 +9,6 @@ const ProductInfo = ({
   starRating,
   numRatings,
   inStock,
-  hasSizes,
   desc,
 }: ProductDetailsInfoType) => {
   return (
@@ -59,7 +58,7 @@ const ProductInfo = ({
         <p>{desc}</p>
       </div>
 
-      <SizesAndBtns hasSizes={hasSizes} />
+      <Btns />
 
       {/* TODO: The underlined texts should point to working links */}
       <div className="border border-[rgba(0,0,0,0.5)] rounded ">

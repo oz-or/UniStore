@@ -7,7 +7,7 @@ const page = () => {
       className="flex flex-col 1440:items-center px-2 1200:px-6 1440:pb-24"
     >
       <div className="pb-16 1024:pb-24">
-        <NavigationHeading pageName="Contact" />
+        <NavigationHeading pageName1="Contact" />
 
         <div className="flex flex-col 500:items-center  ">
           <div className="flex flex-col gap-y-12 500:max-w-[475px] 750:max-w-full 1024:flex-row 1024:gap-x-24">

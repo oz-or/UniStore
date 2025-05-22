@@ -1,6 +1,5 @@
 "use client";
 
-import { sizes } from "@/data";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -10,7 +9,7 @@ const warningToast = () => {
   });
 };
 
-const SizesAndBtns = ({ hasSizes }: { hasSizes: boolean }) => {
+const Btns = () => {
   const [quantity, setQuantity] = useState(2);
 
   const handleIncrement = () => {
@@ -32,25 +31,7 @@ const SizesAndBtns = ({ hasSizes }: { hasSizes: boolean }) => {
   return (
     <>
       <Toaster />
-      <div className={`mb-10 ${!hasSizes && "pt-6 750:pt-8 "}`}>
-        {hasSizes && (
-          <div className="flex py-6 items-center gap-x-2.5 750:py-8">
-            <span className="750:text-base">Size:</span>
-            <div className="flex font-medium text-[10px] ml-1 gap-x-2.5 750:text-sm 750:gap-x-3">
-              {sizes.map((size, i) => (
-                <div
-                  key={i}
-                  className="w-6 h-6 border border-[rgba(0,0,0,0.4)] flex items-center
-                     justify-center rounded cursor-pointer hover:bg-secondary-2
-                     hover:text-text hover:border-secondary-2 750:w-8 750:h-8"
-                >
-                  {size}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
+      <div className="mb-10 pt-6 750:pt-8 ">
         <div className="flex gap-x-4 500:gap-x-7 1024:gap-x-4 1200:gap-x-14">
           <div className="flex items-center h-[38px] 500:h-10 500:w-[159px] ">
             <button
@@ -134,4 +115,4 @@ const SizesAndBtns = ({ hasSizes }: { hasSizes: boolean }) => {
   );
 };
 
-export default SizesAndBtns;
+export default Btns;

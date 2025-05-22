@@ -28,7 +28,6 @@ const Page = async (props: { params: Promise<{ id: string }> }) => {
     old_price: oldPrice,
     rating: starRating,
     num_ratings: numRatings,
-    has_sizes: hasSizes,
     in_stock: inStock,
     description: desc,
   } = product[0];
@@ -36,7 +35,7 @@ const Page = async (props: { params: Promise<{ id: string }> }) => {
   return (
     <section id="productDetails" className="flex flex-col 500:items-center ">
       <div className="mt-2 500:w-[500px] 750:w-[750px] 1024:w-[1024px] 1200:w-[1200px] ">
-        <NavigationHeading pageName={name} />
+        <NavigationHeading pageName1={name} />
         <div className="flex flex-col gap-y-8 pb-16 px-6 750:items-center 1024:flex-row 1024:gap-x-8 1200:gap-x-[74px] 1440:px-0 1440:gap-x-16">
           <ProductImages img={img} />
 
@@ -47,7 +46,6 @@ const Page = async (props: { params: Promise<{ id: string }> }) => {
             starRating={starRating}
             numRatings={numRatings}
             inStock={inStock}
-            hasSizes={hasSizes}
             desc={desc}
           />
         </div>

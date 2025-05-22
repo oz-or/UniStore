@@ -12,7 +12,7 @@ const page = () => {
     >
       <div className="pb-16 1024:pb-16">
         <div className="1440:pl-8">
-          <NavigationHeading pageName="About" />
+          <NavigationHeading pageName1="About" />
         </div>
 
         <AboutHero />

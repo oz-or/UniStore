@@ -1,8 +1,6 @@
 import Link from "next/link";
 
 const page = () => {
-  let hasSize = true;
-
   return (
     <main className="ml-[52px] mt-2.5 750:ml-[70px] 750:mr-5 px-2  1024:pb-20 1024:mx-8 1440:mr-0">
       <section id="myProfile" className="grid gap-y-4 500:gap-y-7 ">
@@ -30,11 +28,6 @@ const page = () => {
                     Decoration Flower port
                   </span>
                   <div className="flex gap-x-2">
-                    {hasSize && (
-                      <span className="text-[9px] opacity-75 500:text-xs 1200:text-sm ">
-                        Size: S
-                      </span>
-                    )}
                     <span className="text-[9px] opacity-75 500:text-xs 1200:text-sm  ">
                       Quantity: 1
                     </span>

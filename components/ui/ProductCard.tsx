@@ -3,11 +3,14 @@
 import Link from "next/link";
 import StarRatings from "../StarRatings";
 import { useEffect, useState } from "react";
-import { addItemToCart } from "@/app/(auth)/login/actions";
-import { supabase } from "@/utils/supabase/client";
+import {
+  addItemToCart,
+  updateCartItemQuantity,
+} from "@/app/(auth)/login/actions";
 import { useSession } from "@/contexts/SessionContext/SessionContext";
 import { useCart } from "@/contexts/CartContext/CartContext";
 import { useUser } from "@/contexts/UserContext/UserContext";
+import { useRouter } from "next/navigation";
 
 const ProductCard = ({
   i,
@@ -21,32 +24,53 @@ const ProductCard = ({
   discount: discountLabel,
   oldPrice,
 }: ProductCardType) => {
-  const { session, loading } = useSession();
+  const { session } = useSession();
   const { user, setUser } = useUser();
-  const { fetchCartItems } = useCart();
+  const { fetchCartItems, cartItems } = useCart();
+  const router = useRouter();
 
   const [isWishlistHeartHovered, setIsWishlistHeartHovered] = useState(false);
+  const [addingToCart, setAddingToCart] = useState(false);
 
   const handleAddToCart = async () => {
-    if (!user.id) {
-      console.error("User is not logged in");
+    if (!session) {
+      router.push("/login");
       return;
     }
+
+    setAddingToCart(true);
 
     const item = {
       id: i,
       quantity: 1,
-      size: "xs",
     };
 
     try {
-      await addItemToCart(user.id, item);
-      fetchCartItems(); // Update the cart items
+      // Check for existing item by id
+      const existingItem = cartItems.find(
+        (cartItem) => cartItem.id === item.id
+      );
+
+      if (existingItem) {
+        // Update quantity
+        await updateCartItemQuantity(item.id, existingItem.quantity + 1);
+      } else {
+        // Add new item
+        if (user) {
+          await addItemToCart(user.id, item);
+        } else {
+          throw new Error("User is not available.");
+        }
+      }
+      await fetchCartItems();
       console.log("Added to cart");
     } catch (error) {
       console.error("Error adding item to cart:", error);
+    } finally {
+      setAddingToCart(false);
     }
   };
+
   const handleAddToWishlist = () => {
     //TODO: Add the product to the user's wishlist with this function
   };
@@ -55,7 +79,16 @@ const ProductCard = ({
     //TODO: I should probably add like a "Last watched" section to the user's profile under Manage my account, but this is not a priority for now
   };
 
-  return (
+  return addingToCart ? (
+    <div
+      className="scale-90 flex flex-col gap-y-4 justify-center items-center bg-secondary rounded-lg"
+      style={{ height: "310px" }} // Match this to your card's height at 375px
+    >
+      <div className="flex items-center justify-center h-full">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-secondary-2" />
+      </div>
+    </div>
+  ) : (
     <div key={i} className="scale-90 flex flex-col gap-y-4">
       <div
         className="flex flex-col relative bg-secondary items-center "
@@ -95,15 +128,29 @@ const ProductCard = ({
           />
         </button>
 
-        {i === hovered && (
-          <Link
-            href="/cart"
-            className="absolute bg-black text-primary-1 w-full rounded p-2.5 bottom-[-10px] opacity-0 animation-appear-bottom text-center"
-            onClick={() => handleAddToCart()}
-          >
-            Add To Cart
-          </Link>
-        )}
+        <div
+          className="absolute w-full rounded p-2.5 bottom-[-10px] text-center flex justify-center items-center"
+          style={{ minHeight: "44px" }} // adjust to match button height
+        >
+          {addingToCart ? (
+            <div className="flex items-center justify-center">
+              <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-secondary-2" />
+            </div>
+          ) : (
+            i === hovered && (
+              <Link
+                href="/cart"
+                className="bg-black text-primary-1 w-full rounded p-2.5 opacity-0 animation-appear-bottom text-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAddToCart();
+                }}
+              >
+                Add To Cart
+              </Link>
+            )
+          )}
+        </div>
       </div>
       <div className="flex flex-col gap-y-2">
         <h3 className="font-medium text-base 500:text-xl ">{name}</h3>

@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import UserDropDown from "@/components/home/Navbar/UserDropDown";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import MobileMenu from "../Hero/MobileMenu";
-import { usePathname } from "next/navigation";
+import PageLoadingSpinner from "@/components/ui/PageLoadingSpinner";
 
 import { useSession } from "@/contexts/SessionContext/SessionContext";
 import { useCart } from "@/contexts/CartContext/CartContext";
@@ -31,22 +32,24 @@ const Navlinks = [
 ];
 
 const Navbar = () => {
+  const [redirectingHome, setRedirectingHome] = useState(false);
+  const router = useRouter();
+
   const [inputValue, setInputValue] = useState("");
 
   const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   const isMoreThan1024 = useMediaQuery("(min-width: 1024px)");
 
-  const pathname = usePathname();
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "/";
 
-  const [isHovered, setIsHovered] = useState(pathname);
+  const [isHovered, setIsHovered] = useState<string | null>(null);
 
   const [isWishlistHeartHovered, setIsWishlistHeartHovered] = useState(false);
 
   const { session, loading } = useSession();
   const { cartItemCount, fetchCartItems } = useCart();
-
-  //TODO: I tried to set the users profile picture conditionally (if the user is logged in) and for this I used the users email, because the profile picture isnt in the database yet.
 
   useEffect(() => {
     if (!loading && session) {
@@ -57,10 +60,18 @@ const Navbar = () => {
     }
   }, [loading, session, fetchCartItems]);
 
+  if (redirectingHome) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <PageLoadingSpinner />
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="1200:flex 1200:flex-col 1200:items-center 1200:py-1 px-2 500:px-4">
-        <nav className="flex justify-between items-center py-1.5 750:px-10 1200:w-[1200px] 1024:px-4 justify-self-center 1440:w-[1440px] 1200:pl-12">
+        <nav className="flex justify-between items-center py-1.5 750:px-10 w-full 1200:w-[1200px] 1024:px-4 justify-self-center 500:w-[470px] 1440:w-[1440px] 1200:pl-12 750:w-[775px] 1024:w-full ">
           <div className="flex items-center gap-x-16 1440:gap-x-24">
             <Link href="/">
               <img
@@ -70,43 +81,72 @@ const Navbar = () => {
               />
             </Link>
             {isMoreThan1024 && (
-              <div className="flex gap-x-12 items-center text-base 1440:gap-x-16 1440:text-lg">
-                {Navlinks.map((NavLink, i) => (
-                  <Link
-                    key={i}
-                    href={NavLink.link}
-                    className={`${
-                      pathname === NavLink.link && "border-b border-b-black"
-                    } ${
-                      isHovered === NavLink.link && "border-b border-b-black"
-                    }`}
-                    onMouseEnter={() => setIsHovered(NavLink.link)}
-                    onMouseLeave={() => setIsHovered(NavLink.link)}
-                  >
-                    {NavLink.name}
-                  </Link>
-                ))}
+              <div className="flex gap-x-10 items-center text-base 1440:gap-x-16 1440:text-lg">
+                {Navlinks.map((NavLink, i) =>
+                  NavLink.name === "Home" ? (
+                    <button
+                      key={i}
+                      type="button"
+                      className={`${
+                        pathname === NavLink.link
+                          ? "border-b border-b-black"
+                          : ""
+                      } ${
+                        isHovered === NavLink.link
+                          ? "border-b border-b-black"
+                          : ""
+                      } font-inherit bg-transparent outline-none cursor-pointer`}
+                      onClick={() => {
+                        setRedirectingHome(true);
+                        router.push("/");
+                      }}
+                      onMouseEnter={() => setIsHovered(NavLink.link)}
+                      onMouseLeave={() => setIsHovered(null)}
+                    >
+                      {NavLink.name}
+                    </button>
+                  ) : (
+                    <Link
+                      key={i}
+                      href={NavLink.link}
+                      className={`${
+                        pathname === NavLink.link
+                          ? "border-b border-b-black"
+                          : ""
+                      } ${
+                        isHovered === NavLink.link
+                          ? "border-b border-b-black"
+                          : ""
+                      }`}
+                      onMouseEnter={() => setIsHovered(NavLink.link)}
+                      onMouseLeave={() => setIsHovered(null)}
+                    >
+                      {NavLink.name}
+                    </Link>
+                  )
+                )}
               </div>
             )}
           </div>
 
           <div className="flex">
-            <div className="relative mr-3 500:mr-4">
+            <div className="relative ">
               <input
-                className="pl-4 pr-10 py-[7px] relative text-[10px] placeholder:opacity-85 bg-secondary text-black rounded-[4px] border-none outline-neutral-100 h-full 500:pl-6 500:pr-16 1440:w-[350px] 1440:text-[16px] 1440:py-3  1440:placeholder:opacity-60"
+                className="pl-4 py-[7px] relative text-[10px] placeholder:opacity-85 bg-secondary text-black rounded-[4px] border-none outline-neutral-100 h-full mx-3
+    pr-8 1440:text-[16px] 1440:py-3 1440:placeholder:opacity-60
+    max-w-full w-[clamp(140px,_52.5vw,_280px)] 750:w-[430px] 750:py-3 750:text-[14px] 1024:w-[300px] 1200:w-[450px] 1440:w-[525px]"
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="What are you looking for?"
               />
-              {/* TODO: The search functionality needs to work when the enter key is pressed and when the magnifying glass is clicked too */}
               <img
                 src="/SearchMagnifyingGlass.svg"
-                className="absolute h-3.5 right-3 top-[8px] opacity-50 hover:opacity-30 hover:cursor-pointer transition-opacity 1440:w-5 1440:h-5 1440:top-[13px] 1440:right-4"
+                className="absolute h-3.5 right-4 top-[8px] 750:h-[18px] 750:right-6 750:top-[14px] opacity-50 hover:opacity-30 hover:cursor-pointer transition-opacity 1440:w-5 1440:h-5 1440:top-[13px] 1440:right-4"
                 alt=""
               />
             </div>
-            <div className="flex items-center gap-x-1.5 500:gap-x-2 1024:gap-x-3">
+            <div className="flex items-center gap-x-1.5 500:gap-x-4 1024:gap-x-5">
               <button
                 onMouseEnter={() =>
                   setIsWishlistHeartHovered(!isWishlistHeartHovered)

@@ -17,7 +17,7 @@ export default function NotFound() {
     >
       {/* TODO: Fix the width (it is bigger than the width of the homePage ()where the texts are) f.e.)  */}
       <div className="1440:w-[1340px]">
-        <NavigationHeading pageName="404 Error" />
+        <NavigationHeading pageName1="404 Error" />
 
         <div className="flex flex-col items-center py-10 750:py-20 1440:py-32">
           <div className="flex flex-col items-center 1024:gap-y-4 ">

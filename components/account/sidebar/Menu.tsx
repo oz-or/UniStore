@@ -47,34 +47,44 @@ const Menu = ({ isOpen }: { isOpen: boolean }) => {
             : "gap-y-[1px] mt-3 500:mt-[18px] "
         }`}
       >
-        {accountSidebarItems.map(({ text, alt, icon, link }, i) => (
-          <li key={i}>
-            <Link
-              href={!isOpen ? "" : link}
-              className={`flex items-center gap-x-3 py-1.5 font-semibold text-xs 1024:text-sm 1200:text-base rounded opacity-85 1024:gap-x-4  ${
-                !isOpen ? "px-3.5 " : "px-3.5 hover:bg-neutral-50"
-              } transition-[padding] ease-in-out duration-300`}
-            >
-              <img
-                src={icon}
-                alt={alt}
-                className="w-[13px] h-[13px] 500:w-[17px] 500:h-[17px] 1024:w-5 1024:h-5 1200:h-6 1200:w-6"
-              />
-              <span
-                className={`
-                  whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300
-                ${
-                  !isOpen
-                    ? "-translate-x-96 opacity-0 hidden"
-                    : "translate-x-0 opacity-100"
-                }
-              `}
-              >
-                {text}
-              </span>
-            </Link>
-          </li>
-        ))}
+        {accountSidebarItems
+          .filter((item) => item !== undefined)
+          .map((item, i) => {
+            const { text, alt, icon, link } = item as {
+              text: string;
+              alt: string;
+              icon: string;
+              link: string;
+            };
+            return (
+              <li key={i}>
+                <Link
+                  href={!isOpen ? "" : link}
+                  className={`flex items-center gap-x-3 py-1.5 font-semibold text-xs 1024:text-sm 1200:text-base rounded opacity-85 1024:gap-x-4  ${
+                    !isOpen ? "px-3.5 " : "px-3.5 hover:bg-neutral-50"
+                  } transition-[padding] ease-in-out duration-300`}
+                >
+                  <img
+                    src={icon}
+                    alt={alt}
+                    className="w-[13px] h-[13px] 500:w-[17px] 500:h-[17px] 1024:w-5 1024:h-5 1200:h-6 1200:w-6"
+                  />
+                  <span
+                    className={`
+                      whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300
+                    ${
+                      !isOpen
+                        ? "-translate-x-96 opacity-0 hidden"
+                        : "translate-x-0 opacity-100"
+                    }
+                  `}
+                  >
+                    {text}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
 
         <li>
           <button onClick={handleLogout}>

@@ -1,13 +1,35 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "@/contexts/SessionContext/SessionContext";
+import Spinner from "@/components/ui/Spinner";
 
 const SuccessPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("orderId");
+  const { session, loading } = useSession();
+
+  useEffect(() => {
+    if (!loading && !session) {
+      router.replace("/login");
+    }
+    if (!loading && session && !orderId) {
+      router.replace("/cart");
+    }
+  }, [session, loading, orderId, router]);
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (!session || !orderId) {
+    return null;
+  }
 
   return (
-    <div className="max-w-full mx-auto px-4 py-8 500:max-w-[500px] 750:max-w-[750px] 1024:max-w-[1024px] 1200:max-w-[1200px] 1440:max-w-[1440px]  flex items-center justify-center 1440:h-[700px] ">
+    <div className="max-w-full mx-auto px-4 py-8 500:max-w-[500px] 750:max-w-[750px] 1024:max-w-[1024px] 1200:max-w-[1200px] 1440:max-w-[1440px] flex items-center justify-center 1440:h-[800px] ">
       <div className="max-w-[800px] w-full bg-white shadow-md rounded-lg p-8 md:p-12 text-center 1024:my-12 my-6">
         <div className="flex justify-center mb-8">
           <svg

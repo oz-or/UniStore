@@ -73,7 +73,6 @@ export async function addItemToCart(
   item: {
     id: number;
     quantity: number;
-    size: string;
   }
 ) {
   const supabase = await createClient();
@@ -113,7 +112,6 @@ export async function addItemToCart(
     price: product.price,
     description: description,
     quantity: item.quantity,
-    size: item.size,
     img: product.img,
   });
 
@@ -292,9 +290,12 @@ export const placeOrder = async (
     product_id: string;
     quantity: number;
     price: number;
+    name: string;
+    img: string;
     // You can add other fields if needed, e.g. name, img, etc.
   }[],
-  total: number
+  total: number,
+  paymentOption: string
 ) => {
   const supabase = await createClient();
 
@@ -308,6 +309,7 @@ export const placeOrder = async (
           total: total,
           status: "Ordered",
           items: cartItems, // Store the items as JSONB
+          payment_option: paymentOption,
         },
       ])
       .select()

@@ -12,11 +12,9 @@ const NavigationHeading = ({
       <Link href="/">
         <span className="opacity-50">Home / </span>{" "}
       </Link>
-      <Link href="/cart">
-        <span
-          className={`opacity-50 ${pageName2 ? "opacity-50" : "font-semibold"}`}
-        >
-          Cart /{" "}
+      <Link href={"/${pageName1}"}>
+        <span className={` ${pageName2 ? "opacity-50" : "font-semibold"}`}>
+          {pageName1}{" "}
         </span>{" "}
       </Link>
       <span className="font-semibold">{pageName2}</span>

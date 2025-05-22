@@ -1,5 +1,3 @@
-import { link } from "fs";
-
 //TODO: Make the links point to the right pages after the pages are created
 export const heroNavLinks = [
   { href: "#", text: "Woman's Fashion" },
@@ -83,8 +81,6 @@ export const achievements = [
     desc: "Annual gross sale on our site",
   },
 ];
-
-export const sizes = ["XS", "S", "M", "L", "XL"];
 
 export const accountSidebarItems = [
   {

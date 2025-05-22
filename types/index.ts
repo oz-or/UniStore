@@ -23,7 +23,6 @@ declare type ProductDetailsInfoType = {
   oldPrice?: number;
   starRating: number;
   numRatings: number;
-  hasSizes: boolean;
   inStock: boolean;
   desc: string;
 };

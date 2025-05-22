@@ -20,9 +20,9 @@ const errorToast = () =>
 const ContactForm = () => {
   const form = useRef<HTMLFormElement | null>(null);
 
-  const serviceId = "service_yae5d8s";
-  const templateId = "contact_me_template";
-  const publicKey = "TDwz86vdpmYgewrdN";
+  const serviceId = process.env.NEXT_PUBLIC_CONTACT_SERVICE_ID!;
+  const templateId = process.env.NEXT_PUBLIC_CONTACT_TEMPLATE_ID!;
+  const publicKey = process.env.NEXT_PUBLIC_CONTACT_PUBLIC_KEY!;
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();

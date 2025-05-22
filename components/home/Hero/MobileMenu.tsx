@@ -2,7 +2,7 @@
 
 import { heroNavLinks } from "@/data";
 import HeroNavLink from "./HeroNavLink";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { RemoveScroll } from "react-remove-scroll";
@@ -10,85 +10,109 @@ import { RemoveScroll } from "react-remove-scroll";
 const MobileMenu = ({ isMoreThan1024 }: { isMoreThan1024: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [isHovered, setIsHovered] = useState(0);
-
   return (
     !isMoreThan1024 && (
-      <div className="relative">
-        <div>
-          <div className="flex py-2 gap-x-5 500:gap-x-14 750:py-3 750:px-6 750:gap-x-16 px-2 50:px-4">
-            <button
-              className="flex gap-x-1 items-center"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              <span>Categories</span>
-              <img className="w-3.5 " src="/ArrowRightBlack.svg" alt="" />
-            </button>
+      <div className="relative z-50 ">
+        {/* Backdrop */}
+        {isOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-40 transition-opacity z-40"
+            onClick={() => setIsOpen(false)}
+          />
+        )}
 
-            <div className="flex gap-x-4 500:gap-x-10 750:gap-x-16">
-              <Link href="/" onClick={() => setIsOpen(false)}>
-                Home
-              </Link>
-              <Link href="/contact" onClick={() => setIsOpen(false)}>
-                Contact
-              </Link>
-              <Link href="/about" onClick={() => setIsOpen(false)}>
-                About
-              </Link>
-              <Link href="#" onClick={() => setIsOpen(false)}>
-                Sign Up
-              </Link>
-            </div>
+        <div className="500:w-full mx-auto flex items-center justify-between py-2 px-4 sm:px-4 w-[375px] bg-white 750:px-8 shadow-sm rounded-xl mb-2 750:w-[750px]">
+          <button
+            className={`group flex items-center gap-x-1 px-3 py-1 bg-primary-1 border border-gray-300 rounded-full shadow hover:bg-primary-2 transition-colors duration-200 text-sm 500:text-base font-semibold ${
+              isOpen ? "text-white" : "text-gray-900"
+            } focus:text-white active:text-white`}
+            style={{ minWidth: 0 }}
+            onClick={() => setIsOpen(true)}
+            aria-label="Open menu"
+          >
+            <span className="text-sm 500:text-base">Categories</span>
+            {/* Black arrow (default) */}
+            <img
+              className={`w-4 h-4 ${isOpen ? "hidden" : "group-active:hidden"}`}
+              src="/ArrowRightBlack.svg"
+              alt=""
+            />
+            {/* White arrow (when open or active) */}
+            <img
+              className={`w-4 h-4 ${
+                isOpen ? "" : "hidden group-active:inline"
+              }`}
+              src="/ArrowRightWhite.svg"
+              alt=""
+            />
+          </button>
+
+          <div className="flex gap-x-3 500:gap-x-7 750:mr-4 750:gap-x-16">
+            <Link
+              href="/"
+              className="font-semibold text-gray-800 hover:underline underline-offset-4 transition-colors text-xs 750:text-lg 500:text-base"
+              onClick={() => setIsOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              href="/contact"
+              className="font-semibold text-gray-800 hover:underline underline-offset-4 transition-colors text-xs 750:text-lg 500:text-base"
+              onClick={() => setIsOpen(false)}
+            >
+              Contact
+            </Link>
+            <Link
+              href="/about"
+              className="font-semibold text-gray-800 hover:underline underline-offset-4 transition-colors text-xs 750:text-lg 500:text-base"
+              onClick={() => setIsOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              href="#"
+              className="font-semibold text-gray-800 hover:underline underline-offset-4 transition-colors text-xs 750:text-lg 500:text-base"
+              onClick={() => setIsOpen(false)}
+            >
+              Sign Up
+            </Link>
           </div>
         </div>
 
-        {/*  The RemoveScroll from the react-remove-scroll package removes the option to scroll while the mobile menu is open */}
-
         <RemoveScroll enabled={isOpen}>
-          <div
-            className={`absolute z-40 bg-primary-1 top-[-94px] 500:top-[-90px] 750:top-[-112px] w-screen flex justify-between py-3 px-5 items-start h-screen 500:py-4 500:px-7 750:px-9 750:py-6 pt-4 ease-in-out duration-300 right-0 ${
-              isOpen ? "translate-x-0 " : "translate-x-[-100%]"
-            } `}
+          <nav
+            className={`fixed top-0 right-0 h-full w-4/5 max-w-xs bg-primary-1 z-50 shadow-lg transform transition-transform duration-300 ${
+              isOpen ? "translate-x-0" : "translate-x-full"
+            } overflow-y-auto`}
+            aria-label="Mobile menu"
           >
-            {/* TODO: Style the Mobile Menu somehow (I think that I should do it exactly like in the Crypto project) */}
-            <div className="flex flex-col gap-y-4 ">
+            {/* Close Button */}
+            <button
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition"
+              onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
+            >
+              <Image src="/x.png" alt="Close" width={28} height={28} />
+            </button>
+
+            <div className="flex flex-col gap-y-6 mt-16 px-6 h-full">
               {heroNavLinks.map(({ href, text }, i) => (
                 <HeroNavLink
                   key={i}
                   href={href}
-                  className={
-                    "flex justify-between items-center gap-x-4 font-medium text-lg "
-                  }
+                  className="flex items-center gap-x-4 font-semibold text-lg py-3 px-2 rounded hover:bg-secondary-2 transition"
                   text={text}
                   handleClick={() => setIsOpen(false)}
                 >
                   {i <= 1 && (
-                    <div
-                      className="rotate-[270deg] "
-                      onClick={() => setIsOpen(false)}
-                    >
+                    <div className="rotate-[270deg]">
                       <img src="/DropDownBlack.svg" alt="" />
                     </div>
                   )}
                 </HeroNavLink>
               ))}
             </div>
-            <button
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              <Image
-                className="m-1"
-                src="/x.png"
-                alt=""
-                width={20}
-                height={20}
-              />
-            </button>
-          </div>
+          </nav>
         </RemoveScroll>
       </div>
     )

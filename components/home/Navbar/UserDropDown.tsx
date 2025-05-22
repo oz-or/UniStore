@@ -45,20 +45,28 @@ const UserDropDown = ({
       <DropdownMenuTrigger className="rounded-full ml-1 ">
         <img className="w-6 500:w-8 1024:w-9" src={profilePicture} alt="" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-[rgba(0,0,0,0.4)] backdrop-blur-md rounded-[4px] flex flex-col text-text translate-x-[-36px]">
+      <DropdownMenuContent
+        side="bottom"
+        align="end"
+        className="z-50 bg-[rgba(0,0,0,0.4)] backdrop-blur-md rounded-[4px] flex flex-col text-text w-max max-w-xs mt-2 overflow-x-hidden"
+      >
         <UserDropDownMenuItem
           href="/account"
           iconSrc="/UserIcon.svg"
           text="Manage My Account"
         />
-        <UserDropDownMenuItem href="#" iconSrc="/Order.svg" text="My Orders" />
         <UserDropDownMenuItem
-          href="#"
+          href="/orders"
+          iconSrc="/Order.svg"
+          text="My Orders"
+        />
+        <UserDropDownMenuItem
+          href="/cancellations"
           iconSrc="/Cancel.svg"
           text="My Cancellations"
         />
         <UserDropDownMenuItem
-          href="#"
+          href="/reviews"
           iconSrc="/Reviews.svg"
           text="My Reviews"
         />
