@@ -49,8 +49,7 @@ const FlashSaleItems = () => {
             name,
             price,
             old_price: oldPrice,
-            rating: starRating,
-            num_ratings: numberOfRatings,
+            in_stock: inStock,
           }) => (
             <ProductCard
               key={id}
@@ -59,8 +58,7 @@ const FlashSaleItems = () => {
               name={name}
               price={price}
               oldPrice={oldPrice}
-              rating={starRating}
-              numberOfRatings={numberOfRatings}
+              inStock={inStock}
               discount={discountLabel}
               hovered={hovered}
               setHovered={setHovered}

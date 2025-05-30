@@ -30,7 +30,7 @@ const CartPage = () => {
 
   const handleApplyCoupon = async () => {
     setIsApplyingCoupon(true);
-    setCouponError("");      // Clear previous error
+    setCouponError(""); // Clear previous error
     setCouponApplied(false); // Clear previous success
 
     try {
@@ -68,7 +68,7 @@ const CartPage = () => {
 
   useEffect(() => {
     if (!loading && session) {
-      getUserCartItems().then((cartItems) => {
+      getUserCartItems(session.user.id).then((cartItems) => {
         if (cartItems) {
           setCartItems(cartItems);
         }
@@ -180,11 +180,13 @@ const CartPage = () => {
           <div className="flex justify-center gap-2 mt-2">
             <button
               onClick={() => {
-                deleteCartItem(id);
-                setCartItems((prevItems) =>
-                  prevItems.filter((item) => item.id !== id)
-                );
-                fetchCartItems();
+                if (session) {
+                  deleteCartItem(id, session.user.id);
+                  setCartItems((prevItems) =>
+                    prevItems.filter((item) => item.id !== id)
+                  );
+                  fetchCartItems();
+                }
                 toast.dismiss(t.id);
               }}
               className="bg-red-500 text-white px-2 py-1 rounded"
@@ -330,7 +332,7 @@ const CartPage = () => {
                   value={couponCode}
                   onChange={(e) => {
                     setCouponCode(e.target.value);
-                    setCouponError("");      // Clear previous error
+                    setCouponError(""); // Clear previous error
                     setCouponApplied(false); // Clear previous success
                   }}
                   className="flex-grow border border-gray-300 rounded-l px-4 py-2 text-sm 750:text-base 1024:text-lg 1024:py-3 750:w-20 focus:outline-none focus:ring-[0.5px] focus:ring-secondary-2 focus:border-secondary-2 hover:border-secondary-2"

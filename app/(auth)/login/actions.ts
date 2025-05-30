@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 import Stripe from "stripe";
+import { userAgent } from "next/server";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -88,35 +89,22 @@ export async function addItemToCart(
     .eq("id", item.id)
     .single();
 
-  const { data: description, error: detailsFetchError } = await supabase
-    .from("products_details")
-    .select("description")
-    .eq("id", item.id)
-    .single();
-
-  if (detailsFetchError) {
-    console.error("Error fetching product details:", detailsFetchError);
-  } else {
-    console.log("Product details:", description);
-  }
-
   if (fetchError || !product) {
     throw new Error("Error fetching product or product not found");
   }
 
   // Insert the product into the cart_items table with the userId
-  const { error: insertError } = await supabase.rpc("insert_item_into_cart", {
-    user_id: userId,
-    product_id: product.id,
-    name: product.name,
-    price: product.price,
-    description: description,
-    quantity: item.quantity,
-    img: product.img,
-  });
+  const { error: insertError } = await supabase.from("cart_items").insert([
+    {
+      user_id: userId,
+      product_id: product.id,
+      quantity: item.quantity,
+    },
+  ]);
 
   if (insertError) {
     console.error("Error inserting item into cart:", insertError);
+    throw insertError;
   } else {
     console.log("Item added to cart successfully");
   }
@@ -124,39 +112,62 @@ export async function addItemToCart(
   return { message: "Item added to cart successfully" };
 }
 
-export async function getUserCartItems() {
+export async function getUserCartItems(userId: string) {
   const supabase = await createClient();
-  // Fetch the current session
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
 
-  if (userError) {
-    console.error("Error fetching user:", userError);
-    return []; // Return an empty array or handle the error as needed
-  }
-
-  if (!user) {
-    console.log("User is not authenticated");
-    return []; // Return an empty array if the user is not authenticated
-  }
-
-  // Get the user ID from the session
-  const userId = user.id;
-
-  // Query the cart_items table for rows with the same user_id
-  const { data: cartItems, error: fetchError } = await supabase
+  // Join cart_items with products
+  const { data, error } = await supabase
     .from("cart_items")
-    .select("*")
+    .select(
+      `
+      id,
+      product_id,
+      quantity,
+      products (
+        name,
+        price,
+        img
+      )
+    `
+    )
     .eq("user_id", userId);
 
-  if (fetchError) {
-    console.error("Error fetching cart items:", fetchError);
-    return []; // Return an empty array or handle the error as needed
+  if (error) {
+    console.error("Error fetching cart items:", error);
+    return [];
   }
 
-  return cartItems; // Return the retrieved cart items
+  // Map the joined data to flatten the product details
+  interface ProductType {
+    name: string;
+    price: number;
+    img: string;
+  }
+
+  interface CartItemType {
+    id: number;
+    product_id: number;
+    quantity: number;
+    name: string;
+    price: number;
+    img: string;
+  }
+
+  type SupabaseCartItem = {
+    id: number;
+    product_id: number;
+    quantity: number;
+    products: ProductType;
+  };
+
+  return (data as SupabaseCartItem[]).map(
+    (item): CartItemType => ({
+      id: item.id,
+      product_id: item.product_id,
+      quantity: item.quantity,
+      ...item.products, // spreads name, price, img, etc.
+    })
+  );
 }
 
 export const updateCartItemQuantity = async (id: number, quantity: number) => {
@@ -173,7 +184,7 @@ export const updateCartItemQuantity = async (id: number, quantity: number) => {
   }
 };
 
-export async function deleteCartItem(itemId: number) {
+export async function deleteCartItem(itemId: number, userId: string) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -187,7 +198,7 @@ export async function deleteCartItem(itemId: number) {
   } else {
     console.log("Cart item deleted:", data);
     // Refresh the cart items display
-    getUserCartItems();
+    getUserCartItems(userId);
   }
 }
 

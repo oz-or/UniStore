@@ -2,15 +2,16 @@
 
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import WishlistBtn from "../account/wishlist/WishlistBtn";
 
 const warningToast = () => {
-  toast.error("One person can only order 10 items at a time", {
+  toast.error("One person can only order a maximum of 10 items at a time", {
     duration: 6000,
   });
 };
 
-const Btns = () => {
-  const [quantity, setQuantity] = useState(2);
+const Btns = ({ productId }: { productId: number }) => {
+  const [quantity, setQuantity] = useState(1);
 
   const handleIncrement = () => {
     if (quantity >= 10) {
@@ -27,6 +28,8 @@ const Btns = () => {
   const [isPlusHovered, setIsPlusHovered] = useState(false);
 
   const [isWishlistHeartHovered, setIsWishlistHeartHovered] = useState(false);
+
+  console.log("WishlistBtn productId:", productId);
 
   return (
     <>
@@ -89,25 +92,9 @@ const Btns = () => {
             Buy Now
           </button>
 
+          {/* TODO: The Wishlistbtn does not show up on the page, fix it and commit with the message: Implemented the Wishlist page and functionality */}
           <div className="rounded border border-[rgba(0,0,0,0.5)] h-[38px] 500:h-10 w-[38px] 500:w-10 flex items-center justify-center">
-            <button
-              onMouseEnter={() =>
-                setIsWishlistHeartHovered(!isWishlistHeartHovered)
-              }
-              onMouseLeave={() =>
-                setIsWishlistHeartHovered(!isWishlistHeartHovered)
-              }
-            >
-              <img
-                src={
-                  !isWishlistHeartHovered
-                    ? "/WishlistHeart.svg"
-                    : "/WishlistHeartFilled.svg"
-                }
-                alt=""
-                className="scale-[60%] translate-y-[2px]"
-              />
-            </button>
+            <WishlistBtn productId={productId} />
           </div>
         </div>
       </div>

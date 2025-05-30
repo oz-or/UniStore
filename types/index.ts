@@ -13,16 +13,14 @@ declare type ProductsType = {
   name: string;
   price: number;
   old_price?: number;
-  rating: number;
-  num_ratings: number;
+  in_stock: boolean;
 };
 
 declare type ProductDetailsInfoType = {
+  id: number;
   name: string;
   price: number;
   oldPrice?: number;
-  starRating: number;
-  numRatings: number;
   inStock: boolean;
   desc: string;
 };
@@ -33,10 +31,9 @@ declare type ProductCardType = {
   name: string;
   price: number;
   oldPrice?: number;
-  rating: number;
-  setHovered: React.Dispatch<React.SetStateAction<number>>;
+  inStock: boolean;
+  setHovered: (value: number) => void;
   hovered: number;
-  numberOfRatings: number;
   discount?: number;
 };
 
@@ -58,10 +55,19 @@ declare type ProductCartType = {
 };
 
 declare type CartItemType = {
-  img: string | undefined;
   id: number;
+  product_id: number;
+  quantity: number;
   name: string;
   price: number;
-  quantity: number;
-  image: string;
+  img: string;
+};
+
+declare type WishlistItemsType = {
+  id: number;
+  img: string;
+  name: string;
+  price: number;
+  old_price?: number;
+  discount?: number;
 };

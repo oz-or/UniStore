@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,8 +22,8 @@ const UserDropDown = ({
   userLoggedIn: boolean;
 }) => {
   const router = useRouter();
-  //TODO: When I open the UserDropdown, it pushed its content to the left and creates a scrollbar on the right
-  //TODO: fix the links so that they point to the right pages
+  const [open, setOpen] = useState(false);
+
 
   const handleLogout = async () => {
     if (userLoggedIn) {
@@ -41,7 +44,7 @@ const UserDropDown = ({
     : "https://www.gravatar.com/avatar/";
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger className="rounded-full ml-1 ">
         <img className="w-6 500:w-8 1024:w-9" src={profilePicture} alt="" />
       </DropdownMenuTrigger>
@@ -49,6 +52,8 @@ const UserDropDown = ({
         side="bottom"
         align="end"
         className="z-50 bg-[rgba(0,0,0,0.4)] backdrop-blur-md rounded-[4px] flex flex-col text-text w-max max-w-xs mt-2 overflow-x-hidden"
+        style={{ maxWidth: '100vw', overflowX: 'hidden' }} // <-- add this
+        collisionPadding={8} // <-- add this if supported
       >
         <UserDropDownMenuItem
           href="/account"
@@ -56,20 +61,17 @@ const UserDropDown = ({
           text="Manage My Account"
         />
         <UserDropDownMenuItem
-          href="/orders"
+          href="/account/orders"
           iconSrc="/Order.svg"
           text="My Orders"
         />
+        {/* TODO: Add the wishlistheart svg here with white stroke */}
         <UserDropDownMenuItem
-          href="/cancellations"
+          href="/account/wishlist"
           iconSrc="/Cancel.svg"
-          text="My Cancellations"
+          text="My Wishlist"
         />
-        <UserDropDownMenuItem
-          href="/reviews"
-          iconSrc="/Reviews.svg"
-          text="My Reviews"
-        />
+        <DropdownMenuSeparator className="bg-text/20" />
 
         <button onClick={handleLogout}>
           <DropdownMenuItem className="flex gap-x-2">

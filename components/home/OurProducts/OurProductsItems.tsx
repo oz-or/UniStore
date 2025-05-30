@@ -48,28 +48,18 @@ const OurProductsItems = () => {
   return (
     <>
       <div className="grid grid-cols-2 750:grid-cols-3 1200:grid-cols-4 1440:grid-cols-5">
-        {itemsToRender.map(
-          ({
-            id,
-            img,
-            name,
-            price,
-            rating: starRating,
-            num_ratings: numberOfRatings,
-          }) => (
-            <ProductCard
-              key={id}
-              i={id}
-              img={img}
-              name={name}
-              price={price}
-              rating={starRating}
-              numberOfRatings={numberOfRatings}
-              hovered={hovered}
-              setHovered={setHovered}
-            />
-          )
-        )}
+        {itemsToRender.map(({ id, img, name, price, in_stock: inStock }) => (
+          <ProductCard
+            key={id}
+            i={id}
+            img={img}
+            name={name}
+            price={price}
+            hovered={hovered}
+            setHovered={setHovered}
+            inStock={inStock}
+          />
+        ))}
       </div>
       <OurProductsBtn viewAll={viewAll} setViewAll={setViewAll} />
     </>

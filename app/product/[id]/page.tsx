@@ -22,12 +22,11 @@ const Page = async (props: { params: Promise<{ id: string }> }) => {
   if (!product) return;
 
   const {
+    id,
     name,
     img,
     price,
     old_price: oldPrice,
-    rating: starRating,
-    num_ratings: numRatings,
     in_stock: inStock,
     description: desc,
   } = product[0];
@@ -40,11 +39,10 @@ const Page = async (props: { params: Promise<{ id: string }> }) => {
           <ProductImages img={img} />
 
           <ProductInfo
+            id={id}
             name={name}
             price={price}
             oldPrice={oldPrice}
-            starRating={starRating}
-            numRatings={numRatings}
             inStock={inStock}
             desc={desc}
           />
@@ -52,7 +50,6 @@ const Page = async (props: { params: Promise<{ id: string }> }) => {
         <div className="px-2 mt-2 pb-20">
           <Header text="Related Items" />
 
-          {/*TODO: Render 1 row of products here */}
           <OurProductsItems />
         </div>
       </div>

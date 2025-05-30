@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import UserDropDown from "@/components/home/Navbar/UserDropDown";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -33,16 +33,15 @@ const Navlinks = [
 
 const Navbar = () => {
   const [redirectingHome, setRedirectingHome] = useState(false);
+  const [redirectingWishlist, setRedirectingWishlist] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   const [inputValue, setInputValue] = useState("");
 
   const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   const isMoreThan1024 = useMediaQuery("(min-width: 1024px)");
-
-  const pathname =
-    typeof window !== "undefined" ? window.location.pathname : "/";
 
   const [isHovered, setIsHovered] = useState<string | null>(null);
 
@@ -60,7 +59,21 @@ const Navbar = () => {
     }
   }, [loading, session, fetchCartItems]);
 
+  useEffect(() => {
+    if (redirectingWishlist && (pathname === "/account/wishlist" || pathname === "/login")) {
+      setRedirectingWishlist(false);
+    }
+  }, [redirectingWishlist, pathname]);
+
   if (redirectingHome) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <PageLoadingSpinner />
+      </div>
+    );
+  }
+
+  if (redirectingWishlist) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <PageLoadingSpinner />
@@ -148,21 +161,29 @@ const Navbar = () => {
             </div>
             <div className="flex items-center gap-x-1.5 500:gap-x-4 1024:gap-x-5">
               <button
-                onMouseEnter={() =>
-                  setIsWishlistHeartHovered(!isWishlistHeartHovered)
-                }
-                onMouseLeave={() =>
-                  setIsWishlistHeartHovered(!isWishlistHeartHovered)
-                }
+                type="button"
+                aria-label="Go to wishlist"
+                className={`group flex items-center justify-center rounded-full transition-colors duration-150 p-2
+    ${isWishlistHeartHovered ? "bg-secondary-2/30" : ""}
+  `}
+                onMouseEnter={() => setIsWishlistHeartHovered(true)}
+                onMouseLeave={() => setIsWishlistHeartHovered(false)}
+                onClick={() => {
+                  if (pathname === "/account/wishlist") return; // Don't show spinner or navigate if already there
+                  setRedirectingWishlist(true);
+                  if (userLoggedIn) {
+                    router.push("/account/wishlist");
+                  } else {
+                    router.push("/login");
+                  }
+                }}
               >
                 <img
-                  className="w-4 h-4 500:w-5 500:h-5 cursor"
-                  src={
-                    !isWishlistHeartHovered
-                      ? "/WishlistHeart.svg"
-                      : "/WishlistHeartFilled.svg"
-                  }
-                  alt=""
+                  className={`w-4 h-4 500:w-5 500:h-5 transition-transform duration-150 ${
+                    isWishlistHeartHovered ? "scale-110" : ""
+                  }`}
+                  src="/WishlistHeart.svg"
+                  alt="Wishlist"
                 />
               </button>
               {cartItemCount > 0 ? (
