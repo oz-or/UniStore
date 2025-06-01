@@ -32,8 +32,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const [cartItemCount, setCartItemCount] = useState(0);
   const fetchCartItems = useCallback(async () => {
-    if (session) {
-      const items = await getUserCartItems();
+    if (session && session.user && session.user.id) {
+      const items = await getUserCartItems(session.user.id);
       setCartItems(items);
       setCartItemCount(items.length);
     }

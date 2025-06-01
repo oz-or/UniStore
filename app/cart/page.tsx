@@ -8,8 +8,9 @@ import {
   deleteCartItem,
   getUserCartItems,
   updateCartItemQuantity,
+  clearCart,
   validateCoupon,
-} from "../(auth)/login/actions";
+} from "@/app/(auth)/login/actions";
 import { useSession } from "@/contexts/SessionContext/SessionContext";
 import { useCart } from "@/contexts/CartContext/CartContext";
 import toast, { Toaster } from "react-hot-toast";
@@ -226,6 +227,18 @@ const CartPage = () => {
     (shipping === "Free" ? 0 : parseFloat(shipping.slice(1))) -
     discount;
 
+  const handleClearCart = async () => {
+    if (!session) return;
+    try {
+      await clearCart(session.user.id);
+      setCartItems([]);
+      fetchCartItems();
+      toast.success("Cart cleared!");
+    } catch (error) {
+      toast.error("Failed to clear cart.");
+    }
+  };
+
   if (redirecting) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -245,6 +258,19 @@ const CartPage = () => {
           <Toaster />
           <div className="1440:pl-8">
             <NavigationHeading pageName1="Cart" />
+          </div>
+
+          <div className="flex justify-between items-center mb-4 500:mb-6 1200:mb-10">
+            <h1 className="text-xl font-semibold 1200:text-3xl 500:text-2xl 1440:text-4xl">
+              Cart
+            </h1>
+
+            <button
+              onClick={handleClearCart}
+              className="bg-red-500 text-white px-4 py-1.5 rounded shadow hover:bg-red-600 transition-colors duration-200 text-xs 500:text-sm 1200:text-base font-semibold"
+            >
+              Clear Cart
+            </button>
           </div>
 
           <h1 className="text-xl font-semibold text-center 1200:text-3xl mb-4 500:mb-6 500:text-2xl 1440:text-4xl 1200:mb-10">

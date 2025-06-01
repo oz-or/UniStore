@@ -60,7 +60,10 @@ const Navbar = () => {
   }, [loading, session, fetchCartItems]);
 
   useEffect(() => {
-    if (redirectingWishlist && (pathname === "/account/wishlist" || pathname === "/login")) {
+    if (
+      redirectingWishlist &&
+      (pathname === "/account/wishlist" || pathname === "/login")
+    ) {
       setRedirectingWishlist(false);
     }
   }, [redirectingWishlist, pathname]);
@@ -163,9 +166,7 @@ const Navbar = () => {
               <button
                 type="button"
                 aria-label="Go to wishlist"
-                className={`group flex items-center justify-center rounded-full transition-colors duration-150 p-2
-    ${isWishlistHeartHovered ? "bg-secondary-2/30" : ""}
-  `}
+                className="group flex items-center justify-center rounded-full transition-colors duration-150 p-2"
                 onMouseEnter={() => setIsWishlistHeartHovered(true)}
                 onMouseLeave={() => setIsWishlistHeartHovered(false)}
                 onClick={() => {

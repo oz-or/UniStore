@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 import Stripe from "stripe";
-import { userAgent } from "next/server";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -67,6 +66,27 @@ export async function logout() {
 
   revalidatePath("/");
   redirect("/login");
+}
+
+/* Stripe */
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2025-04-30.basil",
+});
+
+export async function createPaymentIntent(amount: number) {
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount * 100, // Amount in cents
+      currency: "usd",
+      payment_method_types: ["card"],
+    });
+
+    return { clientSecret: paymentIntent.client_secret };
+  } catch (error) {
+    console.error("Error creating payment intent:", error);
+    throw new Error("Failed to create payment intent.");
+  }
 }
 
 export async function addItemToCart(
@@ -202,8 +222,20 @@ export async function deleteCartItem(itemId: number, userId: string) {
   }
 }
 
-/* Coupon validation */
+export async function clearCart(userId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("cart_items")
+    .delete()
+    .eq("user_id", userId);
 
+  if (error) {
+    console.error("Error clearing cart:", error);
+    throw error;
+  }
+}
+
+/* Coupon validation */
 export async function validateCoupon(couponCode: string, subtotal: number) {
   const supabase = await createClient();
   try {
@@ -237,27 +269,6 @@ export async function validateCoupon(couponCode: string, subtotal: number) {
       valid: false,
       error: "An error occurred while validating the coupon.",
     };
-  }
-}
-
-/* Stripe */
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-04-30.basil",
-});
-
-export async function createPaymentIntent(amount: number) {
-  try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100, // Amount in cents
-      currency: "usd",
-      payment_method_types: ["card"],
-    });
-
-    return { clientSecret: paymentIntent.client_secret };
-  } catch (error) {
-    console.error("Error creating payment intent:", error);
-    throw new Error("Failed to create payment intent.");
   }
 }
 
@@ -346,3 +357,40 @@ export const placeOrder = async (
     throw error;
   }
 };
+
+export async function getUserOrders(userId: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+
+export async function cancelOrder(orderId: number, userId: string) {
+  const supabase = await createClient();
+  const { data, error, count } = await supabase
+    .from("orders")
+    .update({ status: "Cancelled" })
+    .eq("id", orderId)
+    .eq("user_id", userId)
+    .select(); // get the updated rows
+
+  if (error) throw error;
+  return data; // or return { data, count }
+}
+
+export async function getOrderById(orderId: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("id", orderId)
+    .single();
+
+  if (error) throw error;
+  return data;
+}

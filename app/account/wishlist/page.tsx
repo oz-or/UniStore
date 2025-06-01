@@ -5,6 +5,7 @@ import {
   updateCartItemQuantity,
 } from "@/app/(auth)/login/actions";
 import WishlistBtn from "@/components/account/wishlist/WishlistBtn";
+import PageLoadingSpinner from "@/components/ui/PageLoadingSpinner";
 import { useCart } from "@/contexts/CartContext/CartContext";
 import { useSession } from "@/contexts/SessionContext/SessionContext";
 import { useUser } from "@/contexts/UserContext/UserContext";
@@ -12,7 +13,11 @@ import { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { getWishlist, clearWishlist } from "@/lib/utils/wishlist";
+import {
+  getWishlist,
+  clearWishlist,
+  removeItemFromWishlist,
+} from "@/lib/utils/wishlist";
 
 const WishlistPage = () => {
   const { session } = useSession();
@@ -21,6 +26,7 @@ const WishlistPage = () => {
   const { fetchCartItems, cartItems } = useCart();
   const router = useRouter();
   const [wishlistItems, setWishlistItems] = useState<WishlistItemsType[]>([]);
+  const [loading, setLoading] = useState(true); // <-- Add loading state
 
   useEffect(() => {
     if (!user) return;
@@ -30,6 +36,8 @@ const WishlistPage = () => {
         setWishlistItems(data);
       } catch (error) {
         console.error("Failed to fetch wishlist:", error);
+      } finally {
+        setLoading(false); // <-- Set loading to false after fetching
       }
     };
     fetchWishlist();
@@ -67,6 +75,7 @@ const WishlistPage = () => {
       }
       await fetchCartItems();
       toast.success("Added to cart!");
+      handleRemoveFromWishlist(itemId);
     } catch (error) {
       console.error("Error adding item to cart:", error);
       toast.error("Failed to add to cart.");
@@ -100,6 +109,26 @@ const WishlistPage = () => {
       toast.error("Failed to move items to cart.");
     }
   };
+
+  const handleRemoveFromWishlist = async (productId: number) => {
+    if (!user) return;
+    try {
+      await removeItemFromWishlist(user.id, productId);
+      setWishlistItems((prev) => prev.filter((item) => item.id !== productId));
+      toast.success("Removed from wishlist!");
+    } catch (error) {
+      toast.error("Failed to remove from wishlist.");
+    }
+  };
+
+  // Show spinner while loading
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <PageLoadingSpinner />
+      </div>
+    );
+  }
 
   if (wishlistItems.length === 0) {
     return (
@@ -239,7 +268,10 @@ const WishlistPage = () => {
                     >
                       Add To Cart
                     </button>
-                    <button className="px-3 py-1 750:px-5 750:py-2 border border-gray-300 rounded transition-all duration-200 text-xs 500:text-sm 1200:text-base font-semibold text-gray-700 hover:bg-red-50 hover:text-red-600 hover:border-red-300 hover:scale-105 hover:shadow focus:outline-none focus:ring-2 focus:ring-red-200">
+                    <button
+                      className="px-3 py-1 750:px-5 750:py-2 border border-gray-300 rounded transition-all duration-200 text-xs 500:text-sm 1200:text-base font-semibold text-gray-700 hover:bg-red-50 hover:text-red-600 hover:border-red-300 hover:scale-105 hover:shadow focus:outline-none focus:ring-2 focus:ring-red-200"
+                      onClick={() => handleRemoveFromWishlist(id)}
+                    >
                       Remove
                     </button>
                   </div>

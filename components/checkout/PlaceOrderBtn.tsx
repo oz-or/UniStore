@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { placeOrder } from "@/app/(auth)/login/actions";
-import { saveBillingDetailsToProfile } from "@/app/(auth)/login/actions";
+
 import emailjs from "@emailjs/browser";
+import {
+  placeOrder,
+  saveBillingDetailsToProfile,
+} from "@/app/(auth)/login/actions";
 
 interface PlaceOrderBtnProps {
   billingInfo: {
@@ -62,10 +65,7 @@ const PlaceOrderBtn: React.FC<PlaceOrderBtnProps> = ({
 
       // Convert to a string for EmailJS
       const cartItemsString = formattedCartItems
-        .map(
-          (item) =>
-            `${item.name} (x${item.quantity}) - $${item.price}`
-        )
+        .map((item) => `${item.name} (x${item.quantity}) - $${item.price}`)
         .join("\n");
 
       console.log({

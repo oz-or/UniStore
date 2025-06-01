@@ -5,6 +5,7 @@ import {
   validateCoupon,
   saveBillingDetailsToProfile,
 } from "@/app/(auth)/login/actions";
+
 import NavigationHeading from "@/components/NavigationHeading";
 import { useSession } from "@/contexts/SessionContext/SessionContext";
 import { useEffect, useState } from "react";
@@ -55,7 +56,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     if (!loading && session) {
       // Fetch cart items
-      getUserCartItems().then((cartItems) => {
+      getUserCartItems(session.user.id).then((cartItems) => {
         if (cartItems) {
           setCartItems(cartItems);
         }
