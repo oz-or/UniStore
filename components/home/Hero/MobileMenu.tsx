@@ -6,17 +6,18 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { RemoveScroll } from "react-remove-scroll";
+import { slugify } from "@/lib/helpers";
 
 const MobileMenu = ({ isMoreThan1024 }: { isMoreThan1024: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     !isMoreThan1024 && (
-      <div className="relative z-50 ">
+      <div className="relative z-40 ">
         {/* Backdrop */}
         {isOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-40 transition-opacity z-40"
+            className="fixed inset-0 bg-black bg-opacity-40 transition-opacity z-30"
             onClick={() => setIsOpen(false)}
           />
         )}
@@ -96,10 +97,10 @@ const MobileMenu = ({ isMoreThan1024 }: { isMoreThan1024: boolean }) => {
             </button>
 
             <div className="flex flex-col gap-y-6 mt-16 px-6 h-full">
-              {heroNavLinks.map(({ href, text }, i) => (
+              {heroNavLinks.map(({ text }, i) => (
                 <HeroNavLink
                   key={i}
-                  href={href}
+                  href={`/category/${slugify(text)}`}
                   className="flex items-center gap-x-4 font-semibold text-lg py-3 px-2 rounded hover:bg-secondary-2 transition"
                   text={text}
                   handleClick={() => setIsOpen(false)}

@@ -1,14 +1,13 @@
-//TODO: Make the links point to the right pages after the pages are created
 export const heroNavLinks = [
-  { href: "#", text: "Woman's Fashion" },
-  { href: "#", text: "Men's Fashion" },
-  { href: "#", text: "Electronics" },
-  { href: "#", text: "Home & Lifestyle" },
-  { href: "#", text: "Medicine" },
-  { href: "#", text: "Sports & Outdoor" },
-  { href: "#", text: "Babys & Toys" },
-  { href: "#", text: "Groceries & Pets" },
-  { href: "#", text: "Health & Beauty" },
+  { text: "Woman's Fashion" },
+  { text: "Men's Fashion" },
+  { text: "Electronics" },
+  { text: "Home & Lifestyle" },
+  { text: "Medicine" },
+  { text: "Sports & Outdoor" },
+  { text: "Babys & Toys" },
+  { text: "Groceries & Pets" },
+  { text: "Health & Beauty" },
 ];
 
 //change the textFirst and textSecond to be appropriate to the images (with chatGpt)
@@ -148,7 +147,7 @@ export const accountSidebarItems = [
     text: "Account Settings",
     alt: "Account Settings icon",
     icon: "/account/settings.png",
-    link: "/account/account-settings",
+    link: "/account/settings",
     /* items: [
       { text: "Privacy Settings", link: "/account/privacy-settings" },
       {

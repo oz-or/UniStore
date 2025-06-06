@@ -27,21 +27,6 @@ export async function getProductsByCategory(category: string) {
   return data;
 }
 
-// The getProductById function retrieves a product from the products table in the database that matches the id passed as an argument.
-export async function getProductByName(name: string) {
-  let { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("name", name);
-
-  if (error) {
-    console.error(error);
-    throw new Error("The product could not be loaded");
-  }
-
-  return data;
-}
-
 // The getBestSellingProducts function retrieves the 16 products with the highest sales from the products table in the database.
 export async function getBestSellingProducts() {
   let { data, error } = await supabase
@@ -101,5 +86,15 @@ export async function getNewProducts() {
     throw new Error("The new products could not be loaded");
   }
 
+  return data;
+}
+
+// The getProductById function retrieves a single product from the products table in the database that matches the id passed as an argument.
+export async function getProductById(id: string) {
+  const { data } = await supabase
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .single();
   return data;
 }

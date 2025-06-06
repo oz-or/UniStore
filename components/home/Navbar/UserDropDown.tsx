@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +23,6 @@ const UserDropDown = ({
 }) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-
 
   const handleLogout = async () => {
     if (userLoggedIn) {
@@ -52,8 +51,8 @@ const UserDropDown = ({
         side="bottom"
         align="end"
         className="z-50 bg-[rgba(0,0,0,0.4)] backdrop-blur-md rounded-[4px] flex flex-col text-text w-max max-w-xs mt-2 overflow-x-hidden"
-        style={{ maxWidth: '100vw', overflowX: 'hidden' }} // <-- add this
-        collisionPadding={8} // <-- add this if supported
+        style={{ maxWidth: "100vw", overflowX: "hidden" }} 
+        collisionPadding={8} 
       >
         <UserDropDownMenuItem
           href="/account"
@@ -65,10 +64,9 @@ const UserDropDown = ({
           iconSrc="/Order.svg"
           text="My Orders"
         />
-        {/* TODO: Add the wishlistheart svg here with white stroke */}
         <UserDropDownMenuItem
           href="/account/wishlist"
-          iconSrc="/Cancel.svg"
+          iconSrc="/WishlistHeartWhite.svg"
           text="My Wishlist"
         />
         <DropdownMenuSeparator className="bg-text/20" />

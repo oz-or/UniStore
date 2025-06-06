@@ -77,7 +77,7 @@ const ProductCard = ({
     ) {
       return;
     }
-    router.push(`/product/${encodeURIComponent(name)}`);
+    router.push(`/product/${i}`);
   };
 
   return (

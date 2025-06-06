@@ -3,23 +3,22 @@ import OurProductsItems from "@/components/home/OurProducts/OurProductsItems";
 import NavigationHeading from "@/components/NavigationHeading";
 import ProductImages from "@/components/productDetails/ProductImages";
 import ProductInfo from "@/components/productDetails/ProductInfo";
-import { getProductByName, getProducts } from "@/utils/apiProducts";
+import { getProductById, getProducts } from "@/utils/apiProducts";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const products = await getProducts();
   return products?.map((product) => ({
-    id: product.name,
+    id: product.id.toString(),
   }));
 }
 
-const Page = async (props: { params: Promise<{ id: string }> }) => {
-  const params = await props.params;
+const Page = async ({ params }: { params: { id: string } }) => {
+  const product = await getProductById(params.id);
 
-  const filteringName = params.id.split("%20").join(" ");
-
-  const product = await getProductByName(filteringName);
-
-  if (!product) return;
+  if (!product) {
+    notFound();
+  }
 
   const {
     id,
@@ -29,7 +28,7 @@ const Page = async (props: { params: Promise<{ id: string }> }) => {
     old_price: oldPrice,
     in_stock: inStock,
     description: desc,
-  } = product[0];
+  } = product;
 
   return (
     <section id="productDetails" className="flex flex-col 500:items-center ">

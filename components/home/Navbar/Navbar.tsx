@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 import UserDropDown from "@/components/home/Navbar/UserDropDown";
@@ -39,6 +39,12 @@ const Navbar = () => {
 
   const [inputValue, setInputValue] = useState("");
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputValue.trim()) return;
+    router.push(`/search?q=${encodeURIComponent(inputValue.trim())}`);
+  };
+
   const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   const isMoreThan1024 = useMediaQuery("(min-width: 1024px)");
@@ -50,6 +56,10 @@ const Navbar = () => {
   const { session, loading } = useSession();
   const { cartItemCount, fetchCartItems } = useCart();
 
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     if (!loading && session) {
       setUserLoggedIn(true);
@@ -58,6 +68,26 @@ const Navbar = () => {
       setUserLoggedIn(false);
     }
   }, [loading, session, fetchCartItems]);
+
+  useEffect(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (!inputValue) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+    debounceRef.current = setTimeout(async () => {
+      const res = await fetch(
+        `/api/products/search?q=${encodeURIComponent(inputValue)}`
+      );
+      if (res.ok) {
+        const data = await res.json();
+        setSuggestions(data);
+        setShowSuggestions(true);
+      }
+    }, 250);
+    // eslint-disable-next-line
+  }, [inputValue]);
 
   useEffect(() => {
     if (
@@ -147,26 +177,56 @@ const Navbar = () => {
 
           <div className="flex">
             <div className="relative ">
-              <input
-                className="pl-4 py-[7px] relative text-[10px] placeholder:opacity-85 bg-secondary text-black rounded-[4px] border-none outline-neutral-100 h-full mx-3
-    pr-8 1440:text-[16px] 1440:py-3 1440:placeholder:opacity-60
-    max-w-full w-[clamp(140px,_52.5vw,_280px)] 750:w-[430px] 750:py-3 750:text-[14px] 1024:w-[300px] 1200:w-[450px] 1440:w-[525px]"
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="What are you looking for?"
-              />
-              <img
-                src="/SearchMagnifyingGlass.svg"
-                className="absolute h-3.5 right-4 top-[8px] 750:h-[18px] 750:right-6 750:top-[14px] opacity-50 hover:opacity-30 hover:cursor-pointer transition-opacity 1440:w-5 1440:h-5 1440:top-[13px] 1440:right-4"
-                alt=""
-              />
+              <form onSubmit={handleSearch} className="relative">
+                <input
+                  className="mx-2 pl-4 pr-10 py-2 rounded-full border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 bg-white text-black transition-all duration-150 shadow-sm  placeholder:text-gray-400 w-[clamp(140px,_52.5vw,_280px)] 750:w-[430px] 1024:w-[300px] 1200:w-[450px] 1440:w-[525px] placeholder:text-[11px] 500:placeholder:text-sm"
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="What are you looking for?"
+                />
+                <button
+                  type="submit"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-red-500 hover:bg-red-600 rounded-full p-2 transition-colors"
+                  aria-label="Search"
+                >
+                  <img
+                    src="/SearchMagnifyingGlass.svg"
+                    alt="Search"
+                    className="w-4 h-4 invert"
+                  />
+                </button>
+                {showSuggestions && suggestions.length > 0 && (
+                  <div className="absolute left-0 right-0 bg-white border rounded shadow z-50 mt-1 max-h-60 overflow-y-auto">
+                    {suggestions.map((product) => (
+                      <div
+                        key={product.id}
+                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+                        onClick={() => {
+                          setShowSuggestions(false);
+                          setInputValue("");
+                          router.push(`/product/${product.id}`);
+                        }}
+                      >
+                        <img
+                          src={product.img || "/products/placeholder.png"}
+                          alt={product.name}
+                          className="w-6 h-6 object-contain"
+                        />
+                        <span>{product.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </form>
             </div>
-            <div className="flex items-center gap-x-1.5 500:gap-x-4 1024:gap-x-5">
+            <div className="flex items-center gap-x-2">
               <button
                 type="button"
                 aria-label="Go to wishlist"
-                className="group flex items-center justify-center rounded-full transition-colors duration-150 p-2"
+                className="group flex items-center justify-center rounded-full transition-colors duration-150 ml-1
+                
+                "
                 onMouseEnter={() => setIsWishlistHeartHovered(true)}
                 onMouseLeave={() => setIsWishlistHeartHovered(false)}
                 onClick={() => {
@@ -180,7 +240,7 @@ const Navbar = () => {
                 }}
               >
                 <img
-                  className={`w-4 h-4 500:w-5 500:h-5 transition-transform duration-150 ${
+                  className={`w-5 h-5 transition-transform duration-150 ${
                     isWishlistHeartHovered ? "scale-110" : ""
                   }`}
                   src="/WishlistHeart.svg"
@@ -189,11 +249,7 @@ const Navbar = () => {
               </button>
               {cartItemCount > 0 ? (
                 <Link href={"/cart"} className="relative">
-                  <img
-                    className="w-4 h-4 500:w-5 500:h-5 1024:w-6 1024:h-6"
-                    src="/Cart.svg"
-                    alt=""
-                  />
+                  <img className="w-6 h-6" src="/Cart.svg" alt="" />
                   <span className="absolute -top-1 -right-1 w-3 h-3 bg-secondary-2 text-[9px] text-primary-1 rounded-full flex items-center justify-center">
                     <span className="top-[0.25px] absolute">
                       {cartItemCount}
@@ -202,15 +258,15 @@ const Navbar = () => {
                 </Link>
               ) : (
                 <Link href={"/cart"}>
-                  <img
-                    className="w-5 h-5 750:w-6 750:h-6"
-                    src="/Cart.svg"
-                    alt=""
-                  />
+                  <img className="w-6 h-6" src="/Cart.svg" alt="" />
                 </Link>
               )}
 
-              <UserDropDown session={session} userLoggedIn={userLoggedIn} />
+              {userLoggedIn ? (
+                <UserDropDown session={session} userLoggedIn={userLoggedIn} />
+              ) : (
+                <Link href="/login">Login</Link>
+              )}
             </div>
           </div>
         </nav>
