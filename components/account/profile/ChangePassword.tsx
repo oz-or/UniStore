@@ -39,7 +39,7 @@ const ChangePassword = ({
     }
 
     const { error: signInError } = await supabase.auth.signInWithPassword({
-      email: user?.email,
+      email: user?.email ?? "",
       password: oldPassword,
     });
 

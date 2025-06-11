@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const products = await getProducts();
-  return products?.map((product) => ({
+  return (products ?? []).map((product) => ({
     id: product.id.toString(),
   }));
 }
