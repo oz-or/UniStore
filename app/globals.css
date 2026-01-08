@@ -160,8 +160,6 @@ body {
   transform: rotate3d(1, 5, -1, 180deg);
 }
 
-/* Toast styles that make it look like a modal window */
-/* TODO: The .toast-container style does not work, when applied the entire toast does not show up. I tried to make the toast look like a modal window with .toast-container applied as the style of the background but it didnt work. Do this later.*/
 .toast-container {
   display: flex;
   justify-content: center;

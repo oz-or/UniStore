@@ -28,6 +28,8 @@ const WishlistPage = () => {
   const [wishlistItems, setWishlistItems] = useState<WishlistItemsType[]>([]);
   const [loading, setLoading] = useState(true); // <-- Add loading state
 
+  
+
   useEffect(() => {
     if (!user) return;
     const fetchWishlist = async () => {
@@ -177,7 +179,7 @@ const WishlistPage = () => {
                 .reduce((sum, item) => sum + (item.price || 0), 0)
                 .toFixed(2)}
             </span>
-            {/* TODO: Make these 2 buttons fit to the rest of the page and they should be next to the Total text (with justify-between), not under it*/}
+
             <div className="flex gap-2 500:text-xs text-[9px] 750:gap-x-5 750:text-sm 1200:gap-x-6  ">
               <button
                 onClick={handleClearWishlist}

@@ -41,7 +41,6 @@ const ProductInfo = ({
 
       <Btns productId={id} />
 
-      {/* TODO: The underlined texts should point to working links */}
       <div className="border border-[rgba(0,0,0,0.5)] rounded ">
         <div className="flex rounded border-b border-b-[rgba(0,0,0,0.5)] py-1 750:py-3 ">
           <div className="flex items-center">

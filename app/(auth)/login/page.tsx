@@ -5,12 +5,6 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function LoginPage() {
-  //TODO: Empty the input fields if login is successful
-  //TODO: Add error handling for login
-
-  //TODO: Add a google login button with the text of "Login with Google"
-  //TODO: Add a way to navigate to the sign-up page from here f.e. "Don't have an account? Sign Up" just like in the sign up page with the login navigation
-
   return (
     <section
       id="login"

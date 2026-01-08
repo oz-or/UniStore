@@ -6,8 +6,6 @@ import NewArrival from "@/components/home/NewArrival/NewArrival";
 import OurProducts from "@/components/home/OurProducts/OurProducts";
 
 const Home = () => {
-  //TODO!: Edit the hover states on every clickable element on the page
-
   return (
     <>
       <Hero />

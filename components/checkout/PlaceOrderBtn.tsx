@@ -68,21 +68,6 @@ const PlaceOrderBtn: React.FC<PlaceOrderBtnProps> = ({
         .map((item) => `${item.name} (x${item.quantity}) - $${item.price}`)
         .join("\n");
 
-      console.log({
-        email: billingInfo.email,
-        user_name: billingInfo.firstName + " " + billingInfo.lastName,
-        order_id: orderId,
-        cart_items: cartItemsString,
-        total,
-        payment_option: paymentOption,
-        billing_firstName: billingInfo.firstName,
-        billing_lastName: billingInfo.lastName,
-        billing_address: billingInfo.address,
-        billing_city: billingInfo.city,
-        billing_email: billingInfo.email,
-        billing_phone: billingInfo.phone,
-      });
-
       await emailjs.send(
         serviceId,
         templateId,
@@ -102,7 +87,6 @@ const PlaceOrderBtn: React.FC<PlaceOrderBtnProps> = ({
         },
         publicKey
       );
-      console.log("Order confirmation email sent!");
     } catch (error) {
       console.error("Failed to send order confirmation email:", error);
     }
@@ -127,16 +111,11 @@ const PlaceOrderBtn: React.FC<PlaceOrderBtnProps> = ({
       // Place the order and move cart items to the orders table
       const orderId = await placeOrder(userId, cartItems, total, paymentOption);
 
-      console.log("Order placed successfully!", orderId);
-
       // Save billing details to the public.profiles table
       await saveBillingDetailsToProfile(userId, billingInfo);
 
-      console.log("Billing details saved successfully!");
       // Send confirmation email
       await sendOrderConfirmationEmail(orderId);
-
-      console.log("Order confirmation email sent!");
 
       // Call the callback to notify the parent component
       onOrderPlaced(orderId);

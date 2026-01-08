@@ -140,10 +140,6 @@ const Profile = () => {
         throw uploadError;
       }
 
-      if (image) {
-        console.log(image);
-      }
-
       const { data: imgUrl } = supabase.storage
         .from("profile-pictures")
         .getPublicUrl(`${user?.id || ""}/${file.name}`);

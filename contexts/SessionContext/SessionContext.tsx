@@ -38,8 +38,6 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({
     fetchSession();
   }, []);
 
-  console.log(session);
-
   return (
     <SessionContext.Provider value={{ session, loading }}>
       {children}

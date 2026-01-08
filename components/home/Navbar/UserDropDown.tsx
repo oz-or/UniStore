@@ -26,18 +26,16 @@ const UserDropDown = ({
 
   const handleLogout = async () => {
     if (userLoggedIn) {
-      console.log("Logging out");
+      
 
       await logout();
 
-      //TODO: After logging out if the user is on a page that needs authentication, redirect them to the login page with router.push("/login")
-      console.log("Successfully Logged out");
+     
     } else {
       return;
     }
   };
 
-  //TODO: Change the default image(the gravatar image) to the user's profile picture
   const profilePicture = !userLoggedIn
     ? "/User.svg"
     : "https://www.gravatar.com/avatar/";
@@ -51,8 +49,8 @@ const UserDropDown = ({
         side="bottom"
         align="end"
         className="z-50 bg-[rgba(0,0,0,0.4)] backdrop-blur-md rounded-[4px] flex flex-col text-text w-max max-w-xs mt-2 overflow-x-hidden"
-        style={{ maxWidth: "100vw", overflowX: "hidden" }} 
-        collisionPadding={8} 
+        style={{ maxWidth: "100vw", overflowX: "hidden" }}
+        collisionPadding={8}
       >
         <UserDropDownMenuItem
           href="/account"

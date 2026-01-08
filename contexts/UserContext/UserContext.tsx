@@ -29,9 +29,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       } = await supabase.auth.getUser();
       if (error) {
         console.error("Error fetching user:", error);
-        setUser(null); // Set user to null on error
+        setUser(null);
       } else {
-        console.log("Fetched user:", user); // Log the fetched user
         setUser(user);
       }
       setLoading(false);

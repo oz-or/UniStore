@@ -377,8 +377,7 @@ const CheckoutPage = () => {
                         total={total}
                         onPaymentSuccess={() => {
                           setStripePaid(true);
-                          setPaymentError(""); // clear any previous error
-                          console.log("Payment was successful!");
+                          setPaymentError("");
                         }}
                       />
                     </Elements>

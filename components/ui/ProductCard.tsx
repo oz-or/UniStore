@@ -61,7 +61,6 @@ const ProductCard = ({
         }
       }
       fetchCartItems();
-      console.log("Added to cart");
     } catch (error) {
       console.error("Error adding item to cart:", error);
     } finally {

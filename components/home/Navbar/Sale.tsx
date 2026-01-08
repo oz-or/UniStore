@@ -4,9 +4,6 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import Link from "next/link";
 
 const Sale = () => {
-  /* TODO: make the link connect to the corresponding page */
-  /* TODO: Make the language selector work later */
-
   const moreThan750 = useMediaQuery("(min-width: 750px)");
 
   return (
@@ -32,5 +29,3 @@ const Sale = () => {
 };
 
 export default Sale;
-
-

@@ -42,7 +42,7 @@ export default function AccountSettingsPage() {
   // Save notification preferences
   const handleNotificationsSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Saving notification preferences...", notifications);
+
     if (!user) {
       toast.error("No user found.");
       return;
@@ -55,12 +55,13 @@ export default function AccountSettingsPage() {
         twoFA,
       },
     });
-    console.log("Supabase error:", error);
+
     if (error) {
       toast.error("Failed to save preferences.");
     } else {
       // Refetch the user to get the latest metadata
-      const { data: refreshedUser, error: userError } = await supabase.auth.getUser();
+      const { data: refreshedUser, error: userError } =
+        await supabase.auth.getUser();
       if (userError) {
         toast.error("Preferences saved, but failed to refresh user.");
       } else {
@@ -73,7 +74,7 @@ export default function AccountSettingsPage() {
   // Save 2FA preference
   const handleSecuritySave = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Saving security settings...");
+
     if (!user) return;
     const { error } = await supabase.auth.updateUser({
       data: {
@@ -84,7 +85,8 @@ export default function AccountSettingsPage() {
       toast.error("Failed to update security settings.");
     } else {
       // Refetch the user to get the latest metadata
-      const { data: refreshedUser, error: userError } = await supabase.auth.getUser();
+      const { data: refreshedUser, error: userError } =
+        await supabase.auth.getUser();
       if (userError) {
         toast.error("Security settings updated, but failed to refresh user.");
       } else {

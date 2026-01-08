@@ -66,9 +66,7 @@ const FlashSaleItems = () => {
           )
         )}
       </div>
-      {/* 
-        TODO: Render 1 row of products here from the DB. The rest should appear when the user clicks on the view all products button
-        */}
+
       <FlashSaleButton viewAll={viewAll} setViewAll={setViewAll} />
     </>
   );

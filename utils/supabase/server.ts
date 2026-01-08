@@ -41,5 +41,3 @@ export async function createClient() {
     }
   );
 }
-
-//TODO: This should be an async function, it is written in the Docs. But if I make it async, it shows that the await cookies() is pointless. But that is in the Supabase Auth installation guide. If i make this sync, the browser will throw an error that "Server actions must be async functions". Everything was fine until I tried to access the session of the user in the useUser hook.

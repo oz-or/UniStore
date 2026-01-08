@@ -17,7 +17,7 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-//TODO: The metadata title should be changed to the current website's title after Unistore:
+
 export const metadata: Metadata = {
   title: "UniStore: Discover Uniqueness, Shop Now!",
   description:

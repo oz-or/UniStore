@@ -11,10 +11,8 @@ const Menu = ({ isOpen }: { isOpen: boolean }) => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    console.log("Logging out");
     await logout();
     router.push("/login");
-    console.log("Successfully Logged out");
   };
   return (
     <>

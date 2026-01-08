@@ -7,21 +7,13 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { redirect } from "next/navigation";
 
 export default function SignUpPage() {
-  //TODO: Empty the input fields if login is successful and redirect to the previous page that the user was on and show a success toast
-  //TODO: The signup and login server actions should receive the data that is being sent from the form (formData: FormData) is what these receive
-
   const isMoreThan500 = useMediaQuery("(min-width: 500px)");
   const isMoreThan1024 = useMediaQuery("(min-width: 1024px)");
 
   const handleGoogleSuccess = (credentialResponse: any) => {
-    console.log(credentialResponse);
-
     redirect("/account");
   };
-  const handleGoogleError = () => {
-    //TODO: Add error handling
-    console.log("Login Failed");
-  };
+
   return (
     <section
       id="login"
@@ -91,7 +83,6 @@ export default function SignUpPage() {
                 <div className=" flex bg-black p-[1px] 500:py-0.5  rounded">
                   <GoogleLogin
                     onSuccess={handleGoogleSuccess}
-                    onError={handleGoogleError}
                     type={!isMoreThan500 ? "icon" : "standard"}
                     text="signup_with"
                     width={isMoreThan1024 ? 200 : 280}

@@ -23,7 +23,7 @@ export async function login(formData: FormData) {
     /* return null; */
     // Return null or handle the error as needed
   } else {
-    console.log("User logged in:", user);
+ 
 
     revalidatePath("/account");
     redirect("/account");
@@ -125,9 +125,9 @@ export async function addItemToCart(
   if (insertError) {
     console.error("Error inserting item into cart:", insertError);
     throw insertError;
-  } else {
-    console.log("Item added to cart successfully");
-  }
+  } 
+    
+  
 
   return { message: "Item added to cart successfully" };
 }
@@ -216,8 +216,7 @@ export async function deleteCartItem(itemId: number, userId: string) {
     console.error("Error deleting cart item:", error);
     alert("Failed to delete item. Please try again.");
   } else {
-    console.log("Cart item deleted:", data);
-    // Refresh the cart items display
+   
     getUserCartItems(userId);
   }
 }
@@ -297,8 +296,6 @@ export const saveBillingDetailsToProfile = async (
     if (error) {
       throw new Error(error.message);
     }
-
-    console.log("Billing details saved successfully!");
   } catch (err) {
     console.error("Error saving billing details:", err);
     throw err;

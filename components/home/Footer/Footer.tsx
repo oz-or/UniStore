@@ -5,11 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const Footer = () => {
-  //TODO: Fix the links
-
   const [inputValue, setInputValue] = useState("");
-
-  //TODO: Handle the email subscription(the Input field)
 
   return (
     <section
@@ -52,7 +48,6 @@ const Footer = () => {
                 <li>contact@unistore.com</li>
               </Link>
               <Link href="#">
-                {/* TODO: Implement that this phone number could actually be called by clicking on it */}
                 <li>+01457-864329</li>
               </Link>
             </ul>
