@@ -52,9 +52,9 @@ export const heroCarouselItems = [
 export const Categories = [
   { name: "Phones", img: "/home/categories/Phone.svg" },
   { name: "Computers", img: "/home/categories/Computer.svg" },
-  { name: "Smartwatch", img: "/home/categories/Smartwatch.svg" },
+  { name: "Smartwatch", img: "/home/categories/SmartWatch.svg" },
   { name: "Camera", img: "/home/categories/Camera.png" },
-  { name: "HeadPhones", img: "/home/categories/Headphones.svg" },
+  { name: "HeadPhones", img: "/home/categories/HeadPhones.svg" },
   { name: "Gaming", img: "/home/categories/Gaming.svg" },
 ];
 
