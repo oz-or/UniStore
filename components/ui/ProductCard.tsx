@@ -46,7 +46,7 @@ const ProductCard = ({
     try {
       // Check for existing item by id
       const existingItem = cartItems.find(
-        (cartItem) => cartItem.id === item.id
+        (cartItem) => cartItem.id === item.id,
       );
 
       if (existingItem) {
@@ -82,6 +82,8 @@ const ProductCard = ({
   return (
     <div
       key={i}
+      data-testid="product-card"
+      data-product-id={i}
       className={`scale-90 flex flex-col gap-y-4 items-start ${
         inStock ? "" : "opacity-50 pointer-events-none"
       }`}
@@ -105,6 +107,7 @@ const ProductCard = ({
           className="pt-6 scale-75 h-[180px] 500:h-[250px] 500:scale-[85%]"
           src={img}
           alt={name}
+          data-testid="product-card-image"
         />
 
         {/* WishlistBtn - add a className */}
@@ -132,6 +135,8 @@ const ProductCard = ({
                   e.stopPropagation();
                   handleAddToCart();
                 }}
+                data-testid="product-card-add-to-cart"
+                data-product-id={i}
                 className="bg-black text-primary-1 w-full rounded p-2.5 opacity-0 animation-appear-bottom text-center add-to-cart-btn"
               >
                 Add To Cart
@@ -141,7 +146,12 @@ const ProductCard = ({
         </div>
       </div>
       <div className="flex flex-col gap-y-2">
-        <h3 className="font-medium text-base 500:text-xl ">{name}</h3>
+        <h3
+          className="font-medium text-base 500:text-xl "
+          data-testid="product-card-name"
+        >
+          {name}
+        </h3>
         <div className={`flex flex-col items-start `}>
           <div
             className={`mb-[-5px] text-[14px] font-medium flex 500:text-base ${
@@ -152,6 +162,7 @@ const ProductCard = ({
               className={`${
                 discountLabel ? "text-secondary-2" : ""
               } text-base 1024:text-lg`}
+              data-testid="product-card-price"
             >
               ${price}
             </span>

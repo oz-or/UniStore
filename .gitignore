@@ -8,6 +8,12 @@
 
 # testing
 /coverage
+/selenium/coverage
+
+# selenium workspace
+/selenium/node_modules
+/selenium/.env
+/selenium/.env.local
 
 # next.js
 /.next/

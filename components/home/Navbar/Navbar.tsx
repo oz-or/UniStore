@@ -78,7 +78,7 @@ const Navbar = () => {
     }
     debounceRef.current = setTimeout(async () => {
       const res = await fetch(
-        `/api/products/search?q=${encodeURIComponent(inputValue)}`
+        `/api/products/search?q=${encodeURIComponent(inputValue)}`,
       );
       if (res.ok) {
         const data = await res.json();
@@ -169,7 +169,7 @@ const Navbar = () => {
                     >
                       {NavLink.name}
                     </Link>
-                  )
+                  ),
                 )}
               </div>
             )}
@@ -184,11 +184,13 @@ const Navbar = () => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="What are you looking for?"
+                  data-testid="navbar-search-input"
                 />
                 <button
                   type="submit"
                   className="absolute right-2 top-1/2 -translate-y-1/2 bg-red-500 hover:bg-red-600 rounded-full p-2 transition-colors"
                   aria-label="Search"
+                  data-testid="navbar-search-submit"
                 >
                   <img
                     src="/SearchMagnifyingGlass.svg"
